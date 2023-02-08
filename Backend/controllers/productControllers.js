@@ -27,11 +27,10 @@ const addProdct = asyncHandler(async(req,res)=>{
     })
 
     if(prodct){
-    res.status(200).json({
+    res.status(201).json({
         id: prodct.id,
         name: prodct.name,
         sku: prodct.sku,
-
     })
     }
 })
