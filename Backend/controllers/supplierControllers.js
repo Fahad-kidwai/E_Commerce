@@ -3,8 +3,8 @@ const asyncHandler = require('express-async-handler')
 const Supplier = require('../models/supplierModel')
 
 const getSupplier = asyncHandler(async(req,res)=>{
-    const {name} = req.body
-    const supplier = await Supplier.find({name})
+    const {p_No} = req.body
+    const supplier = await Supplier.findOne({p_No})
     if(!supplier){
         res.status(400)
         throw new Error('Supplier not found')
@@ -21,16 +21,17 @@ const createSupplier = asyncHandler(async(req,res)=>{
         throw new Error('Add all fields')
     }
 
-    const supplier = await Supplier.create({
-        name,
-        p_No,
-        address
-    })
+    const supplierExist = await Supplier.findOne({p_No})
+    if(supplierExist){
+        res.status(400)
+        throw new Error('Supplier Exists')
+    }
+
+    const supplier = await Supplier.create(req.body)
     if(supplier){
         res.status(201).json({
             id: supplier.id,
             name: supplier.name,
-            p_No: supplier.p_No,
         })
     }
     else{
