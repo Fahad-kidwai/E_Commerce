@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const crypto = require('crypto')
+const validator = require('validator')
 
 const userSchema = mongoose.Schema({
     name:{
@@ -8,15 +10,38 @@ const userSchema = mongoose.Schema({
     email:{
         type: String,
         required: [true,'Please add an email'],
-        unique: true
+        unique: true,
+        validate: [validator.isEmail,"Please Enter a valid Email"]
     },
     password:{
         type: String,
-        required: [true,'Please add a password']  //to be checked not storing password
-    }
+        required: [true,'Please add a password'], //to be checked not storing password
+        minLength: [8,"Must be greater than 8 characters"],
+        select: false
+    },
+    role:{
+        type: String,
+        default: "user"
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
 }, 
   {  timestamps: true,}
 
 )
+
+userSchema.methods.getResetPasswordToken = function() {
+    //Generate Token
+    const resetToken = crypto.randomBytes(20)
+    // hashing
+    this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+    this.resetPasswordExpire = Date.now() + 15 *60 *1000;
+
+    return resetToken;
+}
 
 module.exports = mongoose.model('User',userSchema)

@@ -48,7 +48,6 @@ const addProdct = asyncHandler(async(req,res)=>{
     }
 
     const prodct = await Product.create(req.body)
-
     if(prodct){
     res.status(201).json({
         success:true,
@@ -59,11 +58,15 @@ const addProdct = asyncHandler(async(req,res)=>{
 
 //Update  Product --admin
 const updateProdct = asyncHandler(async(req,res)=>{
+    console.log("st")
     const prodct = await Product.findById(req.params.id)
+    console.log("st1")
+
     if(!prodct){
         res.status(400)
         throw new Error("Product not found")
     }
+    console.log("st2")
 
     const updatedProdct = await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true}) 
     res.status(200).json(updatedProdct)

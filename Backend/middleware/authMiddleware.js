@@ -26,4 +26,13 @@ const protect = asyncHanndler(async(req,res,next)=>{
     }
 })
 
-module.exports = {protect}
+const authorizedRoles = (...roles)=>{
+    return asyncHanndler(async(req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            throw new Error("Admin Action!! you can't peform this action")
+        }
+        next()
+    })
+}
+
+module.exports = {protect,authorizedRoles}
