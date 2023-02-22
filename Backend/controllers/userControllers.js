@@ -81,6 +81,19 @@ const loginUser = asyncHandler(async (req,res)=>{
     }
 })
 
+const logout = asyncHandler(async(req,res)=>{
+    req.cookies("token",null,{
+        expires: new Date(Date.now),
+        httpOnly: true
+    });
+
+    res.status(00).json({
+        sucess: true,
+        message: "Log Out"
+    })
+
+})
+
 // @desc Get User data
 // @route Get/api/users/me
 // @access Public
@@ -142,5 +155,7 @@ const generateToken = (id)=>{
 module.exports = {
     registerUser,
     loginUser,
+    forgetPassword,
+    logout,
     getMe,
 }
