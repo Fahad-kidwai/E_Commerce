@@ -13,7 +13,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 function ImageSlider() {
   return (
     <div style={{ padding: "1rem" }}>
-      <p className="exploreHeading text-[2rem] mb-4">Recommended</p>
+      {/* <p className="exploreHeading text-[2rem] mb-4">Recommended</p> */}
 
       <Swiper
         slidesPerView={1}
@@ -24,37 +24,37 @@ function ImageSlider() {
           <Link to={`/pizza/${1}`}>
             <div
               style={{
-                background: `url("https://lh6.googleusercontent.com/8RJeWIyQUR_lMZd7oMkyJVirEcO4c1SB60wmZe_YO06DysbXdUZOnEKuo1MgXFmxMdw=w1200-h630-p") center no-repeat`,
+                background: `url("https://images.unsplash.com/photo-1558818498-28c1e002b655?ixlib=rb-4.0.3&dl=rodion-kutsaiev-EPwuZxdketc-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb") center no-repeat`,
               }}
-              className="swiperSlideDiv h-[40vh]"
+              className="swiperSlideDiv h-[50vh]"
             >
-              <p className="swiperSlideText">NAME</p>
-              <p className="swiperSlidePrice">$2.5</p>
+              {/* <p className="swiperSlideText">NAME</p>
+              <p className="swiperSlidePrice">$2.5</p> */}
             </div>
           </Link>
         </SwiperSlide>
         <SwiperSlide key={2}>
           <div
             style={{
-              background: `url("https://i.ibb.co/0s8WpSn/mahyar-motebassem-p-GA4z-Hvpo5-E-unsplash.jpg") center no-repeat`,
+              background: `url("https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&dl=nadine-primeau--ftWfohtjNw-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb") center no-repeat`,
               backgroundSize: "cover",
             }}
-            className="swiperSlideDiv h-[40vh]"
+            className="swiperSlideDiv h-[50vh]"
           >
-            <p className="swiperSlideText">NAME</p>
-            <p className="swiperSlidePrice">$2.5</p>
+            {/* <p className="swiperSlideText">NAME</p>
+            <p className="swiperSlidePrice">$2.5</p> */}
           </div>
         </SwiperSlide>
         <SwiperSlide key={3}>
           <div
             style={{
-              background: `url("https://i.ibb.co/0s8WpSn/mahyar-motebassem-p-GA4z-Hvpo5-E-unsplash.jpg") center no-repeat`,
+              background: `url("https://images.unsplash.com/photo-1597362925123-77861d3fbac7?ixlib=rb-4.0.3&dl=randy-fath-5aJVJvJ9rG8-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb") center no-repeat`,
               backgroundSize: "cover",
             }}
-            className="swiperSlideDiv h-[40vh]"
+            className="swiperSlideDiv h-[50vh]"
           >
-            <p className="swiperSlideText">NAME</p>
-            <p className="swiperSlidePrice">$2.5</p>
+            {/* <p className="swiperSlideText">NAME</p>
+            <p className="swiperSlidePrice">$2.5</p> */}
           </div>
         </SwiperSlide>
       </Swiper>
