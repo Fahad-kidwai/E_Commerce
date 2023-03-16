@@ -1,10 +1,26 @@
 import React from "react";
-import { FaUserAlt, FaSearch, FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
+
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/user/UserContext";
+import { logout } from "../context/user/UserActions";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { dispatch, state } = useContext(UserContext);
+  console.log(state);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    dispatch({ type: "LOGOUT_USER" });
+    navigate("/");
+    toast.success("Logged out Successfully");
+  };
+
   return (
-    <div className="navbar bg-[#225520]">
+    <div className="navbar bg-[#225520] fixed z-[1000]">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -31,9 +47,6 @@ const Navbar = () => {
               <Link to="/">Homepage</Link>
             </li>
             <li>
-              <Link to="/">Portfolio</Link>
-            </li>
-            <li>
               <Link to="/">About</Link>
             </li>
           </ul>
@@ -45,18 +58,69 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <div className="flex justify-around w-[10rem]">
-          <button className="btn btn-ghost btn-circle">
-            <FaSearch fill="#ffffff" />
-          </button>
+        <div className="flex justify-around w-[16rem]">
+          <input
+            type="text"
+            placeholder="Search here"
+            className="input input-bordered w-full max-w-xs h-8 mt-2"
+          />
           <button className="btn btn-ghost btn-circle">
             <FaShoppingCart fill="#ffffff" />
           </button>
-          <Link to="/login">
+
+          {/* dropdown for authenticaation of user */}
+          <div className="dropdown dropdown-end text-black">
+            <label tabIndex={0} className="btn btn-ghost btn-circle">
+              <FaUserAlt fill="#ffffff" />
+            </label>
+            <ul
+              tabIndex={0}
+              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
+              {state.user && (
+                <>
+                  <li>
+                    <Link className="justify-between" to="/profile">
+                      {state.user.name}
+                    </Link>
+                  </li>
+                  {state.user.role === "admin" && (
+                    <>
+                      <hr />
+                      <li>
+                        <Link className="justify-between" to="/admin/">
+                          Admin Dashboard
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  <hr />
+                  <li onClick={handleLogout}>
+                    <Link>Logout {state.user && state.user.email}</Link>
+                  </li>
+                </>
+              )}
+              {!state.user && (
+                <>
+                  <li>
+                    <Link className="justify-between" to="/login">
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="justify-between" to="/register">
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+          {/* <Link to="/login">
             <button className="btn btn-ghost btn-circle">
               <FaUserAlt fill="#ffffff" />
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ function ImageSlider() {
       {/* <p className="exploreHeading text-[2rem] mb-4">Recommended</p> */}
 
       <Swiper
+        className=" mt-20"
         slidesPerView={1}
         pagination={{ clickable: true }}
         autoplay={true}
