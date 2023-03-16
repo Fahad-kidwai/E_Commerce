@@ -23,7 +23,7 @@ const Inventory = () => {
   const { state } = useContext(UserContext);
   const { productDispatch } = useContext(ProductContext);
   const navigate = useNavigate();
-  console.log(state);
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -40,7 +40,6 @@ const Inventory = () => {
   const { name, sku, category, qParam } = formData;
 
   const handleSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
     try {
       let formData = new FormData();
@@ -56,7 +55,11 @@ const Inventory = () => {
       setProducts([...products, response.prodct]);
       // productDispatch({ type: "GET_PRODUCTS" });
       document.getElementById("my-modal-1").checked = false;
-      toast.success("Product Added Successfully");
+      if (response.success) {
+        toast.success("Product Added Successfully");
+      } else {
+        toast.error(response.error.message);
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -213,7 +216,7 @@ const Inventory = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-green-600"
               >
                 Add Product
               </button>

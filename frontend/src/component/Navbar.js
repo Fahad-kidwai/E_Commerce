@@ -53,8 +53,8 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link to="/" className="btn btn-ghost normal-case text-xl text-white">
-          E Commerce
+        <Link to="/" className="btn btn-ghost normal-case text-2xl text-white">
+          FreshHarvest
         </Link>
       </div>
       <div className="navbar-end">
@@ -64,9 +64,9 @@ const Navbar = () => {
             placeholder="Search here"
             className="input input-bordered w-full max-w-xs h-8 mt-2"
           />
-          <button className="btn btn-ghost btn-circle">
+          <Link to="/cart/" className="btn btn-ghost btn-circle">
             <FaShoppingCart fill="#ffffff" />
-          </button>
+          </Link>
 
           {/* dropdown for authenticaation of user */}
           <div className="dropdown dropdown-end text-black">
