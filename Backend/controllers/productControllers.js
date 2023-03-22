@@ -72,15 +72,17 @@ const addProdct = asyncHandler(async (req, res) => {
 
 //Update  Product --admin
 const updateProdct = asyncHandler(async (req, res) => {
-  console.log("st");
+  // console.log("st");
   const prodct = await Product.findById(req.params.id);
-  console.log("st1");
+  // console.log("st1");
+  console.log("Product", prodct);
+  console.log("body", req.body);
 
   if (!prodct) {
     res.status(400);
     throw new Error("Product not found");
   }
-  console.log("st2");
+  // console.log("st2");
 
   const updatedProdct = await Product.findByIdAndUpdate(
     req.params.id,
@@ -94,6 +96,8 @@ const deleteProdct = asyncHandler(async (req, res) => {
   const deleteProdct = await Product.findByIdAndRemove(req.params.id);
   if (deleteProdct) {
     res.status(200).json("Product Deleted");
+  } else {
+    throw new Error("Product not found");
   }
 });
 

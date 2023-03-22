@@ -31,18 +31,11 @@ const EditProduct = () => {
     e.preventDefault();
     try {
       let editData = new FormData();
-      // formData.append("name", name);
-      // formData.append("sku", sku);
       editData.append("price", price);
       editData.append("Quantity", Quantity);
       // formData.append("image", image);
 
-      const response = await updateProdct(
-        _id,
-        editData,
-        state.user.token,
-        state.user.role
-      );
+      const response = await updateProdct(_id, editData, state.user.token);
       console.log({ response });
       productDispatch({ type: "UPDATE_PRODUCT", payload: response });
       productDispatch({ type: "GET_PRODUCTS" });

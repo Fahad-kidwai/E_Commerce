@@ -11,6 +11,7 @@ import { ProductProvider } from "./context/product/ProductContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./component/Cart";
+import About from "./component/About";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/admin/" element={<Inventory />} />
               <Route path="/cart/" element={<Cart />} />
+              <Route path="/about" element={<About />} />
               <Route path="/admin/users" element={<UserMangement />} />
             </Routes>
           </Router>

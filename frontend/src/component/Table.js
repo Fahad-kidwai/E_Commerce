@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import { useContext } from "react";
 import { FaRegEdit, FaTrash } from "react-icons/fa";
 import { Buffer } from "buffer";
+import { deleteProdct } from "../context/product/ProductActions";
+import { UserContext } from "../context/user/UserContext";
+import { toast } from "react-toastify";
 
 const Table = ({ item, setEditFormData }) => {
   let q = 0;
@@ -18,6 +21,11 @@ const Table = ({ item, setEditFormData }) => {
 
     setEditFormData(element);
     console.log("e from edit button", element);
+  };
+  const { state } = useContext(UserContext);
+  const deleteItem = async (id) => {
+    const response = await deleteProdct(id, state.user.token);
+    toast.success(response);
   };
   // setFormData(item) add it in afunction
   return (
@@ -67,6 +75,7 @@ const Table = ({ item, setEditFormData }) => {
           data-te-ripple-init
           data-te-ripple-color="light"
           title="Delete"
+          onClick={() => deleteItem(item._id)}
         >
           <FaTrash className="h-[18px] w-[18px]" />
         </button>
