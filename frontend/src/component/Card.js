@@ -23,6 +23,7 @@ const Card = ({ item }) => {
     console.log({ data });
     const amt = quantity * data.products.price;
     const product = {
+      id: data.products._id,
       sku: data.products.sku,
       price: data.products.price,
       quantity: quantity,
@@ -45,8 +46,8 @@ const Card = ({ item }) => {
   };
 
   return (
-    <div className="card card-compact w-96 bg-base-100 shadow-xl mb-4">
-      <figure>
+    <div className="card card-compact w-72 h-96 bg-base-100 shadow-xl mb-4">
+      <figure className=" max-h-56">
         <img
           src={`data:${item.image.contentType};base64, ${Buffer.from(
             item.image.data
