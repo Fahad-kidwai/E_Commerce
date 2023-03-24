@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { MdPublic } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Country, State, City } from "country-state-city";
 
 const Cart = () => {
   const myProducts = JSON.parse(localStorage.getItem("cartItems"));
@@ -18,6 +20,24 @@ const Cart = () => {
     localStorage.setItem("cartItems", JSON.stringify(filteredArray));
     setState(filteredArray);
   };
+
+  const [formData, setFormData] = useState({
+    address: "",
+    country: "",
+    state: "",
+    city: "",
+    pinCode: null,
+    phone: null,
+  });
+
+  const handleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleNext = async (data) => {};
 
   return (
     <Fragment>
@@ -103,19 +123,152 @@ const Cart = () => {
               <div></div>
               <div>
                 <button
-                  className="btn btn-ghost btn-xs ml-[0.5rem] transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                  className="btn btn-ghost btn-xs text-white mt-2 transition-colors duration-200 transform hover:bg-green-900 rounded-md bg-green-600 focus:outline-none focus:bg-yellow-400"
                   data-te-toggle="tooltip"
                   data-te-placement="bottom"
                   data-te-ripple-init
                   data-te-ripple-color="green"
                   hover
                   title="Order"
+                  onClick={() => {
+                    document.getElementById("my-modal-3").checked = true;
+                  }}
                 >
                   Check Out
                 </button>
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* modal for shipping info */}
+      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label
+            htmlFor="my-modal-3"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <form className="mt-6" onSubmit={handleNext}>
+            <div className="mb-2">
+              <label
+                for="address"
+                className="block text-sm font-semibold text-gray-800"
+              >
+                Product Name
+              </label>
+              <input
+                type="address"
+                name="address"
+                id="address"
+                onChange={handleChange}
+                required
+                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              />
+            </div>
+
+            <div>
+              <MdPublic />
+
+              <select
+                required
+                id="country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+              >
+                <option value="">Country</option>
+                {Country &&
+                  Country.getAllCountries().map((item) => (
+                    <option key={item.isoCode} value={item.isoCode}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            {formData.country && (
+              <select
+                id="state"
+                name="state"
+                required
+                value={state}
+                onChange={handleChange}
+              >
+                <option value="">State</option>
+                {State &&
+                  State.getStatesOfCountry(formData.country).map((item) => (
+                    <option key={item.isoCode} value={item.isoCode}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            )}
+
+            {formData.state && (
+              <select
+                id="city"
+                name="city"
+                required
+                value={formData.state}
+                onChange={handleChange}
+              >
+                <option value="">State</option>
+                {City &&
+                  City.getCitiesOfState(formData.state).map((item) => (
+                    <option key={item.isoCode} value={item.isoCode}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            )}
+
+            <div className="mb-2">
+              <label
+                for="pinCode"
+                className="block text-sm font-semibold text-gray-800"
+              >
+                Pin Code
+              </label>
+              <input
+                type="number"
+                name="pinCode"
+                id="pinCode"
+                onChange={handleChange}
+                required
+                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label
+                for="phone"
+                className="block text-sm font-semibold text-gray-800"
+              >
+                Category
+              </label>
+              <input
+                type="number"
+                name="phone"
+                id="phone"
+                onChange={handleChange}
+                required
+                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              />
+            </div>
+
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-green-600"
+              >
+                Add Product
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </Fragment>
