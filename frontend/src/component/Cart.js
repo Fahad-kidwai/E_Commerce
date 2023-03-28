@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaHome, FaCity } from "react-icons/fa";
 import { MdPublic } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 
 const Cart = () => {
@@ -30,6 +30,7 @@ const Cart = () => {
     phone: null,
   });
 
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -37,8 +38,11 @@ const Cart = () => {
     }));
   };
 
-  const handleNext = async (data) => {};
-
+  const handleNext = async (e) => {
+    e.preventDefault();
+    console.log("Data = ", formData);
+    navigate("/payment", { state: formData });
+  };
   return (
     <Fragment>
       <div class="p-2 sm:ml-8 ">
@@ -158,7 +162,7 @@ const Cart = () => {
                 for="address"
                 className="block text-sm font-semibold text-gray-800"
               >
-                Product Name
+                Address
               </label>
               <input
                 type="address"
@@ -170,10 +174,10 @@ const Cart = () => {
               />
             </div>
 
-            <div>
+            <div className=" mb-2 flex items-center">
               <MdPublic />
-
               <select
+                className="flex-1"
                 required
                 id="country"
                 name="country"
@@ -191,39 +195,47 @@ const Cart = () => {
             </div>
 
             {formData.country && (
-              <select
-                id="state"
-                name="state"
-                required
-                value={state}
-                onChange={handleChange}
-              >
-                <option value="">State</option>
-                {State &&
-                  State.getStatesOfCountry(formData.country).map((item) => (
-                    <option key={item.isoCode} value={item.isoCode}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
+              <div className=" mb-2 flex items-center">
+                <FaHome />
+                <select
+                  className=" flex-1"
+                  id="state"
+                  name="state"
+                  required
+                  value={formData.state}
+                  onChange={handleChange}
+                >
+                  <option value="">State</option>
+                  {State &&
+                    State.getStatesOfCountry(formData.country).map((x) => (
+                      <option key={x.isoCode} value={x.isoCode}>
+                        {x.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
             )}
 
             {formData.state && (
-              <select
-                id="city"
-                name="city"
-                required
-                value={formData.state}
-                onChange={handleChange}
-              >
-                <option value="">State</option>
-                {City &&
-                  City.getCitiesOfState(formData.state).map((item) => (
-                    <option key={item.isoCode} value={item.isoCode}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
+              <div className=" mb-2 flex items-center">
+                <FaCity />
+                <select
+                  className="flex-1"
+                  id="city"
+                  name="city"
+                  required
+                  value={formData.city}
+                  onChange={handleChange}
+                >
+                  <option value="">City</option>
+                  {City &&
+                    City.getCitiesOfCountry(formData.country).map((item) => (
+                      <option key={item.isoCode} value={item.isoCode}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
             )}
 
             <div className="mb-2">
@@ -248,7 +260,7 @@ const Cart = () => {
                 for="phone"
                 className="block text-sm font-semibold text-gray-800"
               >
-                Category
+                Contact
               </label>
               <input
                 type="number"

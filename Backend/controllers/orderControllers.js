@@ -1,6 +1,6 @@
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
-const asyncHandler = require('express-async-handler');
+const asyncHandler = require("express-async-handler");
 
 // Create new Order
 exports.newOrder = asyncHandler(async (req, res) => {
@@ -29,8 +29,8 @@ exports.newOrder = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     order,
- });
-})
+  });
+});
 
 // get Sinngle Order
 exports.getSingleOrder = asyncHandler(async (req, res) => {
@@ -40,7 +40,7 @@ exports.getSingleOrder = asyncHandler(async (req, res) => {
   );
 
   if (!order) {
-    res.status(404)
+    res.status(404);
     throw new Error("Order not found with this Id");
   }
 
@@ -82,12 +82,12 @@ exports.updateOrder = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
-    res.status(404)
+    res.status(404);
     throw new Error("Order not found with this Id");
   }
 
   if (order.orderStatus === "Delivered") {
-    res.status(400)
+    res.status(400);
     throw new Error("You have already delivered this order");
   }
 
@@ -121,7 +121,7 @@ exports.deleteOrder = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
-    res.status(404)
+    res.status(404);
     throw new Error("Order not found with this Id");
   }
 

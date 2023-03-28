@@ -46,7 +46,7 @@ const Card = ({ item }) => {
   };
 
   return (
-    <div className="card card-compact w-72 h-96 bg-base-100 shadow-xl mb-4">
+    <div className="card card-compact w-72 h-96 bg-base-100 shadow-xl mb-4 hover:scale-150">
       <figure className=" max-h-56">
         <img
           src={`data:${item.image.contentType};base64, ${Buffer.from(
