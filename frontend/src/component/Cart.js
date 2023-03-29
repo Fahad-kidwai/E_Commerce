@@ -3,6 +3,8 @@ import { FaTrash, FaHome, FaCity } from "react-icons/fa";
 import { MdPublic } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
+import { toast } from "react-toastify";
+import { GooglePayButton } from "@google-pay/button-react";
 
 const Cart = () => {
   const myProducts = JSON.parse(localStorage.getItem("cartItems"));
@@ -30,6 +32,8 @@ const Cart = () => {
     phone: null,
   });
 
+  let total = 1000;
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -38,10 +42,27 @@ const Cart = () => {
     }));
   };
 
+  const handleCheckOut = async () => {
+    if (total >= 1000) {
+      document.getElementById("my-modal-3").checked = true;
+    } else {
+      toast(
+        "FreshHarvest is a wholesale platfom, item total should be greater than ₹1000"
+      );
+    }
+    // console.log("Data = ", formData);
+  };
+
   const handleNext = async (e) => {
     e.preventDefault();
-    console.log("Data = ", formData);
-    navigate("/payment", { state: formData });
+    if (total >= 1000) {
+      navigate("/payment", { state: formData });
+    } else {
+      toast(
+        "FreshHarvest is a wholesale platfom /n item total should be greater than  ₹ 1000"
+      );
+    }
+    // console.log("Data = ", formData);
   };
   return (
     <Fragment>
@@ -107,7 +128,7 @@ const Cart = () => {
                   )}
               </tbody>
             </table>
-            {myProducts.length === 0 && (
+            {!myProducts && (
               <div className="flex justify-items-center flex-col mt-5">
                 <div>
                   <h1 className=" text-red-600">It seems your cart is empty</h1>
@@ -118,11 +139,13 @@ const Cart = () => {
               </div>
             )}
           </div>
-          {myProducts.length >= 1 && (
+          {myProducts && myProducts.length >= 1 && (
             <div className=" float-right w-60 mt-6 border-t-2 border-green-600">
               <div className="flex justify-between">
                 <p>Sub Total</p>{" "}
-                <p>₹{myProducts.reduce((acc, item) => acc + item.total, 0)}</p>
+                <p id="total">
+                  ₹{myProducts.reduce((acc, item) => acc + item.total, 0)}
+                </p>
               </div>
               <div></div>
               <div>
@@ -134,9 +157,7 @@ const Cart = () => {
                   data-te-ripple-color="green"
                   hover
                   title="Order"
-                  onClick={() => {
-                    document.getElementById("my-modal-3").checked = true;
-                  }}
+                  onClick={handleCheckOut}
                 >
                   Check Out
                 </button>
@@ -275,10 +296,48 @@ const Cart = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-green-600"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-red-300 focus:outline-none focus:bg-yellow-400"
               >
-                Add Product
+                Proceed to Payment
               </button>
+
+              {/* <GooglePayButton
+                environment="TEST"
+                paymentRequest={{
+                  apiVersion: 2,
+                  apiVersionMinor: 0,
+                  allowedPaymentMethods: [
+                    {
+                      type: "CARD",
+                      parameters: {
+                        allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                        allowedCardNetworks: ["MASTERCARD", "VISA"],
+                      },
+                      tokenizationSpecification: {
+                        type: "PAYMENT_GATEWAY",
+                        parameters: {
+                          gateway: "example",
+                          gatewayMerchantId: "exampleGatewayMerchantId",
+                        },
+                      },
+                    },
+                  ],
+                  merchantInfo: {
+                    merchantId: "12345678901234567890",
+                    merchantName: "Demo Merchant",
+                  },
+                  transactionInfo: {
+                    totalPriceStatus: "FINAL",
+                    totalPriceLabel: "Total",
+                    totalPrice: "100.00",
+                    currencyCode: "USD",
+                    countryCode: "US",
+                  },
+                }}
+                onLoadPaymentData={(paymentRequest) => {
+                  console.log("load payment data", paymentRequest);
+                }}
+              /> */}
             </div>
           </form>
         </div>

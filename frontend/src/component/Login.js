@@ -84,7 +84,7 @@ export default function Login() {
             Forget Password?
           </Link>
           <div className="mt-6">
-            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-300 focus:outline-none focus:bg-yellow-400">
               Login
             </button>
           </div>
@@ -95,7 +95,7 @@ export default function Login() {
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="font-medium text-green-600 hover:underline"
+            className="font-medium text-green-600 hover:underline focus:bg-yellow-400"
           >
             Sign up
           </Link>

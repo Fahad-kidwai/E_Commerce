@@ -16,8 +16,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Cart from "./component/Cart";
 import About from "./component/About";
 import Purchases from "./component/Purchases";
-import Payment from "./component/Payment";
+// import Payment from "./component/Payment";
 import { UserContext } from "../src/context/user/UserContext";
+import Suppliers from "./component/Suppliers";
+import Payment2 from "./component/Payment2";
+
+const stripePromise = loadStripe(
+  "pk_test_51MqDrPSJBLpKte0CMzsdo03pSLmK9ROMDTSPyJhjGH1wpkgiKYuolgGcnANo9IuLpxW8nG6CJikR6eIlvm7UPcOr00XTX5eqci"
+);
+
+console.log(stripePromise);
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -28,28 +36,25 @@ function App() {
   //     Authorization: `Bearer ${state.user.token}`,
   //   },
   // };
-  // async function getStripeApiKey() {
-  //   const { data } = await axios.get("/api/payment/stripeapikey");
 
-  //   setStripeApiKey(data.stripeApiKey);
-  //   console.log(stripeApiKey);
-  // }
-
-  // useEffect(() => {
-  //   getStripeApiKey();
-  // }, []);
+  useEffect(() => {
+    const getStripeApiKey = async () => {
+      const { data } = await axios.get("/api/payment/stripeapikey");
+      console.log("data", data);
+      setStripeApiKey(data.stripeApiKey);
+      console.log(stripeApiKey);
+    };
+    getStripeApiKey();
+  }, [stripeApiKey]);
 
   return (
     <>
       <UserProvider>
         <ProductProvider>
+          {/* <Route exact path="/payment" element={<Payment2 />} /> */}
+
           <Router>
             <Navbar />
-            {/* {stripeApiKey && (
-              <Elements stripe={loadStripe(stripeApiKey)}>
-                <Route exact path="/process/payment" component={Payment} />
-              </Elements>
-            )} */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -59,16 +64,25 @@ function App() {
               <Route path="/about" element={<About />} />
 
               <Route path="/admin/users" element={<UserMangement />} />
+              <Route path="/admin/suppliers" element={<Suppliers />} />
               <Route path="/admin/purchases" element={<Purchases />} />
-              <Route
-                component={
-                  window.location.pathname === "/process/payment"
-                    ? null
-                    : "NotFound"
+              {/* <Route
+                  element={
+                    window.location.pathname === "/payment" ? null : "NotFound"
+                  }
+                /> */}
+              {/* <Route
+                exact
+                path="/payment"
+                element={
+                  <Elements stripe={null}>
+                    <Payment2 />
+                  </Elements>
                 }
-              />
+              /> */}
             </Routes>
           </Router>
+
           <ToastContainer />
         </ProductProvider>
       </UserProvider>

@@ -125,7 +125,7 @@ const Inventory = () => {
         body,
         state.user.token
       );
-      console.log({ response });
+
       productDispatch({ type: "UPDATE_PRODUCT", payload: response });
       productDispatch({ type: "GET_PRODUCTS" });
       document.getElementById("my-modal-2").checked = false;
@@ -339,7 +339,6 @@ const Inventory = () => {
                 name="price"
                 id="price"
                 onChange={handleEditChange}
-                required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -356,7 +355,6 @@ const Inventory = () => {
                 name="Quantity"
                 id="Quantity"
                 onChange={handleEditChange}
-                required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>

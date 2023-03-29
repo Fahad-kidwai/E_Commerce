@@ -32,6 +32,15 @@ const AdminSlider = () => {
           </li> */}
           <li>
             <Link
+              to="/admin/suppliers"
+              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <FaUserAlt />
+              <span class="flex-1 ml-3 whitespace-nowrap">Suppliers</span>
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/admin/purchases"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >

@@ -14,6 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("cartItems");
     dispatch({ type: "LOGOUT_USER" });
     navigate("/");
     toast.success("Logged out Successfully");

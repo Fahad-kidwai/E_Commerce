@@ -104,7 +104,6 @@ const EditProduct = () => {
                 name="price"
                 id="price"
                 onChange={handleEditChange}
-                required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -121,7 +120,6 @@ const EditProduct = () => {
                 name="Quantity"
                 id="Quantity"
                 onChange={handleEditChange}
-                required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -146,7 +144,7 @@ const EditProduct = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-yellow-400"
               >
                 Edit Product
               </button>
