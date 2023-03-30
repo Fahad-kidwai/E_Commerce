@@ -10,13 +10,14 @@ import { toast } from "react-toastify";
 import AdminSlider from "./AdminSlider";
 import { ProductContext } from "../context/product/ProductContext";
 import { getSuppliers } from "../context/supplier/SupplierActions";
+import { newPurchase } from "../context/purchase/PurchaseActions";
 
 const Purchases = () => {
   const [products, setProducts] = useState(null);
   const [id, setID] = useState(null);
   const [prevQuantity, setPrevQuantity] = useState(null);
   const [formData, setFormData] = useState({
-    supplier: "",
+    // supplier: "",
     name: "",
     sku: "",
     price: null,
@@ -25,7 +26,7 @@ const Purchases = () => {
   const [suppliers, setSuppliers] = useState(null);
 
   const { state } = useContext(UserContext);
-  const { productDispatch } = useContext(ProductContext);
+  // const { productDispatch } = useContext(ProductContext);
 
   const handleSkuChange = async () => {
     let sku = document.getElementById("sku");
@@ -52,41 +53,47 @@ const Purchases = () => {
       const data = await getProdct(state.user.token);
       console.log("data", data);
       setProducts(data.products);
-      productDispatch({ type: "GET_PRODUCTS", payload: data });
+      // productDispatch({ type: "GET_PRODUCTS", payload: data });
     };
     const fetchSuppliers = async () => {
       const data = await getSuppliers(state.user.token);
       console.log("sData", data.message);
       setSuppliers(data.message);
     };
-
+    console.log("Form", formData);
     fetchProducts();
     fetchSuppliers();
   }, []);
 
-  // const sl_ID = formData.supplier;
-  // const pName = formData.name;
-  // const pSku = formData.sku
-  // const quantity = formData.Quantity;
-  // const costPrice = formData.price;
+  const pName = formData.name;
+  const pSku = formData.sku;
+  const quantity = formData.Quantity;
+  const costPrice = formData.price;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const x = document.getElementById("supplier");
+      var sl_ID = x.options[x.selectedIndex].value;
+      console.log(sl_ID);
       // formData.Quantity = parseInt(formData.Quantity) + parseInt(prevQuantity);
-      const newForm = new FormData();
-      newForm.append("sl_ID", formData.supplier);
-      newForm.append("pName", formData.name);
-      newForm.append("pSku", formData.sku);
-      newForm.append("quantity", formData.Quantity);
-      newForm.append("costPrice", formData.price);
-      newForm.append("totalAmnt", totalAmnt);
-      console.log(formData);
-      const response = await updateProdct(id, formData, state.user.token);
-      console.log("response", response);
-      productDispatch({ type: "UPDATE_PRODUCT", payload: response });
+      const data = { sl_ID, pName, pSku, quantity, costPrice, totalAmnt };
+      console.log(data);
+      // const newForm = new FormData();
+      // newForm.append("sl_ID", sl_ID);
+      // newForm.append("pName", formData.name);
+      // newForm.append("pSku", formData.sku);
+      // newForm.append("quantity", formData.Quantity);
+      // newForm.append("costPrice", formData.price);
+      // newForm.append("totalAmnt", totalAmnt);
+
+      const response = await newPurchase(data, state.user.token);
+      // const response = await updateProdct(id, newForm, state.user.token);
+      // console.log("response", response);
+      // productDispatch({ type: "UPDATE_PRODUCT", payload: response });
 
       // navigate("/");
+      console.log(response);
       toast.success("Product updated succesfully");
       //   document.getElementById("price").innerHTML = null;
       //   document.getElementById("Quantity").innerHTML = null;
@@ -110,7 +117,7 @@ const Purchases = () => {
                   for="supplier"
                   className="block text-sm font-semibold text-blue-900"
                 >
-                  Select Suuplier
+                  Select Suplier
                 </label>
                 <select
                   type="text"

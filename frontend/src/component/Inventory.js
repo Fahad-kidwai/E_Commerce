@@ -40,7 +40,7 @@ const Inventory = () => {
 
   const [image, setImgFile] = useState(null);
   const { state } = useContext(UserContext);
-  const { productDispatch } = useContext(ProductContext);
+  // const { productDispatch } = useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -70,7 +70,7 @@ const Inventory = () => {
 
       const response = await addProduct(formData, state.user.token);
       console.log({ response });
-      productDispatch({ type: "CREATE_PRODUCT", payload: response });
+      // productDispatch({ type: "CREATE_PRODUCT", payload: response });
       setProducts([...products, response.prodct]);
       // productDispatch({ type: "GET_PRODUCTS" });
       document.getElementById("my-modal-1").checked = false;
@@ -95,10 +95,10 @@ const Inventory = () => {
       console.log("data", data);
       setProducts(data.products);
 
-      productDispatch({ type: "GET_PRODUCTS", payload: data });
+      // productDispatch({ type: "GET_PRODUCTS", payload: data });
     };
     fetchProducts();
-  }, [productDispatch, state.user.token]);
+  }, [state.user.token]);
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -126,8 +126,6 @@ const Inventory = () => {
         state.user.token
       );
 
-      productDispatch({ type: "UPDATE_PRODUCT", payload: response });
-      productDispatch({ type: "GET_PRODUCTS" });
       document.getElementById("my-modal-2").checked = false;
       toast.success("Product Updated Successfully");
     } catch (error) {
@@ -226,14 +224,18 @@ const Inventory = () => {
               >
                 Category
               </label>
-              <input
+              <select
                 type="text"
                 name="category"
                 id="category"
                 onChange={handleChange}
                 required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
+              >
+                <option>LeafyGreen</option>
+                <option>Root</option>
+                <option>Cruciferous</option>
+              </select>
             </div>
 
             <div className="mb-2">
@@ -243,14 +245,17 @@ const Inventory = () => {
               >
                 Quantity Parameter
               </label>
-              <input
+              <select
                 type="text"
                 name="qParam"
                 id="qParam"
                 onChange={handleChange}
                 required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
+              >
+                <option>Kg</option>
+                <option>Pcs</option>
+              </select>
             </div>
 
             <div className="mb-2 mt">

@@ -50,28 +50,28 @@ function App() {
   return (
     <>
       <UserProvider>
-        <ProductProvider>
-          {/* <Route exact path="/payment" element={<Payment2 />} /> */}
+        {/* <ProductProvider> */}
+        {/* <Route exact path="/payment" element={<Payment2 />} /> */}
 
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/admin/" element={<Inventory />} />
-              <Route path="/cart/" element={<Cart />} />
-              <Route path="/about" element={<About />} />
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin/" element={<Inventory />} />
+            <Route path="/cart/" element={<Cart />} />
+            <Route path="/about" element={<About />} />
 
-              <Route path="/admin/users" element={<UserMangement />} />
-              <Route path="/admin/suppliers" element={<Suppliers />} />
-              <Route path="/admin/purchases" element={<Purchases />} />
-              {/* <Route
+            <Route path="/admin/users" element={<UserMangement />} />
+            <Route path="/admin/suppliers" element={<Suppliers />} />
+            <Route path="/admin/purchases" element={<Purchases />} />
+            {/* <Route
                   element={
                     window.location.pathname === "/payment" ? null : "NotFound"
                   }
                 /> */}
-              {/* <Route
+            {/* <Route
                 exact
                 path="/payment"
                 element={
@@ -80,11 +80,11 @@ function App() {
                   </Elements>
                 }
               /> */}
-            </Routes>
-          </Router>
+          </Routes>
+        </Router>
 
-          <ToastContainer />
-        </ProductProvider>
+        <ToastContainer />
+        {/* </ProductProvider> */}
       </UserProvider>
     </>
   );

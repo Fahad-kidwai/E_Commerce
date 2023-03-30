@@ -4,13 +4,13 @@ import Card from "./Card";
 import { Buffer } from "buffer";
 import Swiper from "./Swiper";
 
-import { ProductContext } from "../context/product/ProductContext";
+// import { ProductContext } from "../context/product/ProductContext";
 import { getProdct } from "../context/product/ProductActions";
 import { UserContext } from "../context/user/UserContext";
 
 const Home = () => {
   const [products, setProducts] = useState(null);
-  const { productState, productDispatch } = useContext(ProductContext);
+  // const { productState, productDispatch } = useContext(ProductContext);
   const { state } = useContext(UserContext);
 
   useEffect(() => {
@@ -19,10 +19,10 @@ const Home = () => {
       console.log("data", data);
       setProducts(data.products);
 
-      productDispatch({ type: "GET_PRODUCTS", payload: data });
+      // productDispatch({ type: "GET_PRODUCTS", payload: data });
     };
     fetchProducts();
-  }, [productDispatch, state?.user?.token]);
+  }, [state?.user?.token]);
 
   console.log("products", products);
 
