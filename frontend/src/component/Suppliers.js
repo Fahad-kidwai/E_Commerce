@@ -6,6 +6,7 @@ import AdminSlider from "./AdminSlider";
 import { UserContext } from "../context/user/UserContext";
 import {
   createSupplier,
+  deleteSupplier,
   getSuppliers,
 } from "../context/supplier/SupplierActions";
 import { toast } from "react-toastify";
@@ -30,8 +31,8 @@ const Suppliers = () => {
     const fetchSuppliers = async () => {
       console.log("fetch");
       const data = await getSuppliers(state.user.token);
-      console.log(data);
-      setSuppliers(data);
+      console.log("sData", data.message);
+      setSuppliers(data.message);
     };
     fetchSuppliers();
   }, []);
@@ -43,11 +44,19 @@ const Suppliers = () => {
       const data = await createSupplier(slData, state.user.token);
       console.log(data);
       setSuppliers([...suppliers, data]);
-
       toast.success("Registered Successfully");
+      document.getElementById("my-modal-4").checked = false;
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.message);
     }
+  };
+  const handleDelete = async (id) => {
+    const response = await deleteSupplier(id, state.user.token);
+    console.log(response);
+    // fetchSuppliers()
+    setSuppliers();
+    toast.success(response);
   };
   // const product = [
   //   {
@@ -100,7 +109,7 @@ const Suppliers = () => {
               <tbody>
                 {suppliers &&
                   suppliers?.map((item) => (
-                    <tr>
+                    <tr key={item._id}>
                       <td>
                         <div className="flex items-center space-x-3">
                           <div>
@@ -112,9 +121,9 @@ const Suppliers = () => {
                         {item.p_No}
                         <br />
                       </td>
-                      <td>{address}</td>
+                      <td>{item._id}</td>
                       <th>
-                        <Link to="/edit-product/:productId">
+                        {/* <Link to="/edit-product/:productId">
                           <button
                             className="btn btn-ghost btn-xs"
                             data-te-toggle="tooltip"
@@ -125,13 +134,16 @@ const Suppliers = () => {
                           >
                             <FaRegEdit className="h-[18px] w-[18px]" />
                           </button>
-                        </Link>
+                        </Link> */}
                         <button
                           className="btn btn-ghost btn-xs ml-[0.5rem]"
                           data-te-toggle="tooltip"
                           data-te-placement="bottom"
                           data-te-ripple-init
                           data-te-ripple-color="light"
+                          onClick={() => {
+                            handleDelete(item._id);
+                          }}
                           title="Delete"
                         >
                           <FaTrash className="h-[18px] w-[18px]" />

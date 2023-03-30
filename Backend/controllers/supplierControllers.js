@@ -39,8 +39,10 @@ const createSupplier = asyncHandler(async (req, res) => {
   const supplier = await Supplier.create(req.body);
   if (supplier) {
     res.status(201).json({
-      id: supplier.id,
+      _id: supplier._id,
       name: supplier.name,
+      p_No: supplier.p_No,
+      address: supplier.address,
     });
   } else {
     res.status(400);
@@ -62,9 +64,19 @@ const updateSupplier = asyncHandler(async (req, res) => {
   res.status(200).json(updatedSupplier);
 });
 
+const deleteSuppllier = asyncHandler(async (req, res) => {
+  const deleteSl = await Supplier.findByIdAndRemove(req.params.id);
+  if (deleteSl) {
+    res.status(200).json("Suppllier Deleted");
+  } else {
+    throw new Error("Suppllier not found");
+  }
+});
+
 module.exports = {
   getSupplier,
   getAllSupplier,
   createSupplier,
   updateSupplier,
+  deleteSuppllier,
 };

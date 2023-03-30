@@ -9,11 +9,10 @@ export const getSuppliers = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log("response");
 
     const response = await axios.get(API_URL, config);
-    // console.log("response", response);
-    return response;
+    console.log("response", response.data);
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -60,6 +59,22 @@ export const updateSupplier = async (sl_Id, slData, token) => {
     };
 
     const response = await axios.post(API_URL + sl_Id, slData, config);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteSupplier = async (sl_Id, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.delete(API_URL + sl_Id, config);
 
     return response.data;
   } catch (error) {
