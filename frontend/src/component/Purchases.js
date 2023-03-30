@@ -9,15 +9,20 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminSlider from "./AdminSlider";
 import { ProductContext } from "../context/product/ProductContext";
+import { getSuppliers } from "../context/supplier/SupplierActions";
 
 const Purchases = () => {
   const [products, setProducts] = useState(null);
   const [id, setID] = useState(null);
   const [prevQuantity, setPrevQuantity] = useState(null);
   const [formData, setFormData] = useState({
+    supplier: "",
+    name: "",
+    sku: "",
     price: null,
     Quantity: null,
   });
+  const [suppliers, setSuppliers] = useState(null);
 
   const { state } = useContext(UserContext);
   const { productDispatch } = useContext(ProductContext);
@@ -27,12 +32,11 @@ const Purchases = () => {
     var selectedOption = sku.options[sku.selectedIndex];
     var productID = selectedOption.value;
     setID(productID);
-    const data = await getProdctDetails(productID, state.user.token);
-    console.log("data", data);
-    setPrevQuantity(data.products.Quantity);
-    setFormData(data.products);
-
-    productDispatch({ type: "GET_PRODUCT", payload: data });
+    const item = products.filter((item) => item._id === productID);
+    console.log("item =", item);
+    console.log("item quantity", item[0].Quantity);
+    setPrevQuantity(item[0].Quantity);
+    setFormData(item[0]);
   };
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -41,22 +45,42 @@ const Purchases = () => {
     }));
   };
 
+  const totalAmnt = formData.Quantity * formData.price;
+
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await getProdct(state.user.token);
       console.log("data", data);
       setProducts(data.products);
-
       productDispatch({ type: "GET_PRODUCTS", payload: data });
+    };
+    const fetchSuppliers = async () => {
+      const data = await getSuppliers(state.user.token);
+      console.log("sData", data.message);
+      setSuppliers(data.message);
     };
 
     fetchProducts();
+    fetchSuppliers();
   }, []);
+
+  // const sl_ID = formData.supplier;
+  // const pName = formData.name;
+  // const pSku = formData.sku
+  // const quantity = formData.Quantity;
+  // const costPrice = formData.price;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      formData.Quantity = parseInt(formData.Quantity) + parseInt(prevQuantity);
+      // formData.Quantity = parseInt(formData.Quantity) + parseInt(prevQuantity);
+      const newForm = new FormData();
+      newForm.append("sl_ID", formData.supplier);
+      newForm.append("pName", formData.name);
+      newForm.append("pSku", formData.sku);
+      newForm.append("quantity", formData.Quantity);
+      newForm.append("costPrice", formData.price);
+      newForm.append("totalAmnt", totalAmnt);
       console.log(formData);
       const response = await updateProdct(id, formData, state.user.token);
       console.log("response", response);
@@ -74,85 +98,126 @@ const Purchases = () => {
   return (
     <Fragment>
       <AdminSlider />
-      <div className="relative flex flex-col justify-center overflow-hidden sm:ml-36">
-        <div className="w-full mt-24  p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-green-700 ">
-            Purchases
-          </h1>
-          <form className="mt-6" onSubmit={handleSubmit}>
-            <div className="mb-2">
-              <label
-                for="sku"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Select Sku
-              </label>
-              <select
-                type="string"
-                name="sku"
-                id="sku"
-                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                onChange={handleSkuChange}
-              >
-                <option>Sku</option>
-                {products &&
-                  products.map((item) => (
-                    <option key={item.sku} value={item._id}>
-                      {item.sku}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div className="mb-2">
-              <label
-                for="price"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Price
-              </label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                value={formData.price}
-                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                for="Quantity"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Quantity
-              </label>
-              <input
-                type="number"
-                name="Quantity"
-                id="Quantity"
-                value={formData.Quantity}
-                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                onChange={handleChange}
-              />
-            </div>
+      <div class="p-2 sm:ml-64 ">
+        <div className="relative flex flex-col justify-center shadow-slate-500 overflow-hidden ">
+          <div className="w-full mt-24  p-6 m-auto bg-white rounded-md shadow-lg lg:max-w-xl">
+            <h1 className="text-3xl font-semibold text-center text-blue-900 ">
+              Purchases
+            </h1>
+            <form className="mt-6" onSubmit={handleSubmit}>
+              <div className="mb-2">
+                <label
+                  for="supplier"
+                  className="block text-sm font-semibold text-blue-900"
+                >
+                  Select Suuplier
+                </label>
+                <select
+                  type="text"
+                  name="supplier"
+                  id="supplier"
+                  className="block w-full px-4 py-2 mt-2 text-sky-700 bg-white border rounded-md focus:border-sky-400 focus:ring-sky-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  onChange={handleChange}
+                >
+                  <option>Supplier</option>
+                  {suppliers &&
+                    suppliers.map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-2">
+                <label
+                  for="sku"
+                  className="block text-sm font-semibold text-blue-900"
+                >
+                  Select Sku
+                </label>
+                <select
+                  type="string"
+                  name="sku"
+                  id="sku"
+                  className="block w-full px-4 py-2 mt-2 text-sky-700 bg-white border rounded-md focus:border-sky-400 focus:ring-sky-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  onChange={handleSkuChange}
+                >
+                  <option>Sku</option>
+                  {products &&
+                    products.map((item) => (
+                      <option key={item.sku} value={item._id}>
+                        {item.sku}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-2">
+                <label
+                  for="price"
+                  className="block text-sm font-semibold text-blue-900"
+                >
+                  Price
+                </label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  value={formData.price}
+                  className="block w-full px-4 py-2 mt-2 text-sky-700 bg-white border rounded-md focus:border-sky-400 focus:ring-sky-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-2">
+                <label
+                  for="Quantity"
+                  className="block text-sm font-semibold text-blue-900"
+                >
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  name="Quantity"
+                  id="Quantity"
+                  value={formData.Quantity}
+                  className="block w-full px-4 py-2 mt-2 text-sky-700 bg-white border rounded-md focus:border-sky-400 focus:ring-sky-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-2">
+                <label
+                  for="totalAmnt"
+                  className="block text-sm font-semibold text-blue-900"
+                >
+                  Total
+                </label>
+                <input
+                  type="number"
+                  name="totalAmnt"
+                  id="totalAmnt"
+                  value={totalAmnt}
+                  className="block w-full px-4 py-2 mt-2 text-sky-700 bg-white border rounded-md focus:border-sky-400 focus:ring-sky-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  // onChange={handleChange}
+                />
+              </div>
 
-            <div className="mt-6">
-              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
-                Purchase
-              </button>
-            </div>
-          </form>
+              <div className="mt-6">
+                <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-sky-700 rounded-md hover:bg-sky-600 focus:outline-none focus:bg-sky-600">
+                  Purchase
+                </button>
+              </div>
+            </form>
 
-          <p className="mt-8 text-xs font-light text-center text-gray-700">
-            {" "}
-            New Product?{" "}
-            <Link
-              to="/admin/"
-              className="font-medium text-green-600 hover:underline"
-            >
-              Add Product
-            </Link>
-          </p>
+            <p className="mt-8 text-xs font-light text-center text-sky-700">
+              {" "}
+              New Product?{" "}
+              <Link
+                to="/admin/"
+                className="font-medium text-sky-600 hover:underline"
+              >
+                Add Product
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </Fragment>
