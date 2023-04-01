@@ -48,6 +48,13 @@ const Table = ({ item, setEditFormData }) => {
         </div>
       </td>
       <td>
+        {item.costPrice}
+        <br />
+        {/* <span className="badge badge-ghost badge-sm">
+                Desktop Support Technician
+              </span> */}
+      </td>
+      <td>
         {item.price}
         <br />
         {/* <span className="badge badge-ghost badge-sm">

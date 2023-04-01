@@ -5,11 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { toast } from "react-toastify";
 import { GooglePayButton } from "@google-pay/button-react";
+import displayRazorpay from "../utils/Paymentgateway";
 
 const Cart = () => {
   const myProducts = JSON.parse(localStorage.getItem("cartItems"));
   const [state, setState] = useState(myProducts);
+  // const [t, setTotal] = useState(null);
 
+  // const handletotalChange = (e) => {
+  //   console.log(e.target.value);
+  //   setTotal(e.target.value);
+  // };
   const deleteItem = (id) => {
     console.log(id);
     // localStorage.removeItem('Name');
@@ -32,8 +38,6 @@ const Cart = () => {
     phone: null,
   });
 
-  let total = 1000;
-
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -43,7 +47,13 @@ const Cart = () => {
   };
 
   const handleCheckOut = async () => {
-    if (total >= 1000) {
+    let total = document.getElementById("total").value;
+    console.log(total);
+    console.log(typeof total);
+    let t = parseInt(total);
+    console.log(t);
+    console.log(typeof t);
+    if (total >= 999) {
       document.getElementById("my-modal-3").checked = true;
     } else {
       toast(
@@ -55,18 +65,15 @@ const Cart = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
-    if (total >= 1000) {
-      navigate("/payment", { state: formData });
-    } else {
-      toast(
-        "FreshHarvest is a wholesale platfom /n item total should be greater than  ₹ 1000"
-      );
-    }
-    // console.log("Data = ", formData);
+    // navigate("/payment", { state: formData });
+    displayRazorpay();
+    // navigate("/razorpay", { state: formData });
+
+    console.log("Data = ", formData);
   };
   return (
     <Fragment>
-      <div class="p-2 sm:ml-8 ">
+      <div className="p-2 sm:ml-8 ">
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">My Cart</h1>
@@ -86,7 +93,7 @@ const Cart = () => {
                 {myProducts &&
                   myProducts.map(
                     (item, index) => (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <Link
                             to="/"
@@ -128,13 +135,15 @@ const Cart = () => {
                   )}
               </tbody>
             </table>
-            {!myProducts && (
+            {myProducts && myProducts.length === 0 && (
               <div className="flex justify-items-center flex-col mt-5">
                 <div>
                   <h1 className=" text-red-600">It seems your cart is empty</h1>
                 </div>
                 <Link to={"/"}>
-                  <button className="btn btn-primary">Add Products</button>
+                  <button className="btn btn-primary p-1 min-h-min min-w-min">
+                    Add Products
+                  </button>
                 </Link>
               </div>
             )}
@@ -143,9 +152,10 @@ const Cart = () => {
             <div className=" float-right w-60 mt-6 border-t-2 border-green-600">
               <div className="flex justify-between">
                 <p>Sub Total</p>{" "}
-                <p id="total">
-                  ₹{myProducts.reduce((acc, item) => acc + item.total, 0)}
-                </p>
+                <input
+                  id="total"
+                  value={myProducts.reduce((acc, item) => acc + item.total, 0)}
+                />
               </div>
               <div></div>
               <div>
@@ -155,7 +165,6 @@ const Cart = () => {
                   data-te-placement="bottom"
                   data-te-ripple-init
                   data-te-ripple-color="green"
-                  hover
                   title="Order"
                   onClick={handleCheckOut}
                 >
@@ -180,7 +189,7 @@ const Cart = () => {
           <form className="mt-6" onSubmit={handleNext}>
             <div className="mb-2">
               <label
-                for="address"
+                htmlFor="address"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Address
@@ -261,7 +270,7 @@ const Cart = () => {
 
             <div className="mb-2">
               <label
-                for="pinCode"
+                htmlFor="pinCode"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Pin Code
@@ -278,7 +287,7 @@ const Cart = () => {
 
             <div className="mb-2">
               <label
-                for="phone"
+                htmlFor="phone"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Contact

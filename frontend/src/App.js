@@ -8,44 +8,36 @@ import Navbar from "./component/Navbar";
 import Register from "./component/Register";
 import UserMangement from "./component/UserMangement";
 import { UserProvider } from "./context/user/UserContext";
-import { ProductProvider } from "./context/product/ProductContext";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+// import { ProductProvider } from "./context/product/ProductContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./component/Cart";
 import About from "./component/About";
 import Purchases from "./component/Purchases";
-// import Payment from "./component/Payment";
-import { UserContext } from "../src/context/user/UserContext";
 import Suppliers from "./component/Suppliers";
-import Payment2 from "./component/Payment2";
-
-const stripePromise = loadStripe(
-  "pk_test_51MqDrPSJBLpKte0CMzsdo03pSLmK9ROMDTSPyJhjGH1wpkgiKYuolgGcnANo9IuLpxW8nG6CJikR6eIlvm7UPcOr00XTX5eqci"
-);
-
-console.log(stripePromise);
 
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
-  // const { state } = useContext(UserContext);
-  // console.log(state);
-  // const config = {
-  //   headers: {
-  //     Authorization: `Bearer ${state.user.token}`,
-  //   },
-  // };
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+
+      script.src = src;
+
+      script.onload = () => {
+        resolve(true);
+      };
+
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
 
   useEffect(() => {
-    const getStripeApiKey = async () => {
-      const { data } = await axios.get("/api/payment/stripeapikey");
-      console.log("data", data);
-      setStripeApiKey(data.stripeApiKey);
-      console.log(stripeApiKey);
-    };
-    getStripeApiKey();
-  }, [stripeApiKey]);
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  });
 
   return (
     <>

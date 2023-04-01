@@ -30,6 +30,9 @@ const productSchema = mongoose.Schema(
     price: {
       type: Number,
     },
+    costPrice: {
+      type: Number,
+    },
     Quantity: {
       type: Number,
       maxLen: 4,

@@ -4,7 +4,7 @@ import AdminSlider from "./AdminSlider";
 import Table from "./Table";
 import { toast } from "react-toastify";
 import { UserContext } from "../../src/context/user/UserContext";
-import { ProductContext } from "../../src/context/product/ProductContext";
+// import { ProductContext } from "../../src/context/product/ProductContext";
 import {
   addProduct,
   getProdct,
@@ -26,7 +26,7 @@ const Inventory = () => {
     name: "",
     sku: "",
     price: 0,
-    Quantity: 0,
+    // Quantity: 0,
   });
 
   const handleEditChange = (e) => {
@@ -147,7 +147,8 @@ const Inventory = () => {
               <thead>
                 <tr>
                   <th>Product</th>
-                  <th>Price</th>
+                  <th>Cost Price</th>
+                  <th>Selling Price</th>
                   <th>Stock</th>
                   <th></th>
                 </tr>
@@ -337,7 +338,7 @@ const Inventory = () => {
                 for="price"
                 className="block text-sm font-semibold text-gray-800"
               >
-                Price
+                Selling Price
               </label>
               <input
                 type="number"
@@ -348,7 +349,7 @@ const Inventory = () => {
               />
             </div>
 
-            <div className="mb-2">
+            {/* <div className="mb-2">
               <label
                 for="Quantity"
                 className="block text-sm font-semibold text-gray-800"
@@ -362,7 +363,7 @@ const Inventory = () => {
                 onChange={handleEditChange}
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
-            </div>
+            </div> */}
 
             {/* <div className="mb-2 mt">
               <label
