@@ -4,12 +4,16 @@ import { MdPublic } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { toast } from "react-toastify";
-import { GooglePayButton } from "@google-pay/button-react";
+import { UserContext } from "../context/user/UserContext";
+import { useContext } from "react";
+// import { GooglePayButton } from "@google-pay/button-react";
 import displayRazorpay from "../utils/Paymentgateway";
 
 const Cart = () => {
   const myProducts = JSON.parse(localStorage.getItem("cartItems"));
-  const [state, setState] = useState(myProducts);
+  const [pState, setState] = useState(myProducts);
+
+  const { state } = useContext(UserContext);
   // const [t, setTotal] = useState(null);
 
   // const handletotalChange = (e) => {
@@ -65,8 +69,14 @@ const Cart = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
+    const x = {
+      shippingInfo: formData,
+      price: myProducts.reduce((acc, item) => acc + item.total, 0),
+      orderItems: myProducts,
+      token: state.user.token,
+    };
     // navigate("/payment", { state: formData });
-    displayRazorpay();
+    displayRazorpay({ data: x });
     // navigate("/razorpay", { state: formData });
 
     console.log("Data = ", formData);
@@ -287,15 +297,15 @@ const Cart = () => {
 
             <div className="mb-2">
               <label
-                htmlFor="phone"
+                htmlFor="phoneNo"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Contact
               </label>
               <input
                 type="number"
-                name="phone"
-                id="phone"
+                name="phoneNo"
+                id="phoneNo"
                 onChange={handleChange}
                 required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"

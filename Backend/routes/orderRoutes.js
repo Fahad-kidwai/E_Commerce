@@ -6,12 +6,12 @@ const {
   getAllOrders,
   updateOrder,
   deleteOrder,
-} = require("../controllers/orderController");
+} = require("../controllers/orderControllers");
 const router = express.Router();
 
-const {protect} = require('../middleware/authMiddleware')
+const { protect, authorizedRoles } = require("../middleware/authMiddleware");
 
-// const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+// const { isAuthenticatedUser, authorizedRoles } = require("../middleware/auth");
 
 router.route("/").post(protect, newOrder);
 
@@ -19,13 +19,11 @@ router.route("/:id").get(protect, getSingleOrder);
 
 router.route("/me").get(protect, myOrders);
 
-router
-  .route("/admin")
-  .get(protect, authorizeRoles("admin"), getAllOrders);
+router.route("/admin").get(protect, authorizedRoles("admin"), getAllOrders);
 
 router
   .route("/admin/:id")
-  .put(protect, authorizeRoles("admin"), updateOrder)
-  .delete(protect, authorizeRoles("admin"), deleteOrder);
+  .put(protect, authorizedRoles("admin"), updateOrder)
+  .delete(protect, authorizedRoles("admin"), deleteOrder);
 
 module.exports = router;

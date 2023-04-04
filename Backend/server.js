@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const shortid = require("shortid");
 const Razorpay = require("razorpay");
+// import axios from "axios";
 
 const port = process.env.PORT || 5000;
 
@@ -13,18 +14,32 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
+app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/product", require("./routes/productRoutes"));
+app.use("/api/supplier", require("./routes/supplierRoutes"));
+app.use("/api/purchase", require("./routes/purchaseRoutes"));
+app.use("/api/payment", require("./routes/paymentRoutes"));
+app.use("/api/order", require("./routes/orderRoutes"));
+
 const razorpay = new Razorpay({
-  key_id: "rzp_test_o05Pgdf286j2Pl",
-  key_secret: "SWljt4PzToaUySsTwuPwO3HE",
+  key_id: "rzp_test_9gKa7yzIUkK8FE",
+  key_secret: "7309znjeAUlwksksO7qnvNSc",
 });
 
 app.post("/razorpay", async (req, res) => {
+  // console.log("req", req.body.data);
+  const { price, shippingInfo, orderItems } = req.body.data;
+  console.log(price, shippingInfo, orderItems);
   const payment_capture = 1;
-  const amount = 99;
+  const amount = parseInt(price);
   const currency = "INR";
-
+  console.log(typeof amount);
   const options = {
-    amount: amount * 100,
+    amount: parseInt(amount * 100),
     currency: currency,
     receipt: shortid.generate(),
     payment_capture,
@@ -44,16 +59,6 @@ app.post("/razorpay", async (req, res) => {
     console.log(error);
   }
 });
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-
-app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/product", require("./routes/productRoutes"));
-app.use("/api/supplier", require("./routes/supplierRoutes"));
-app.use("/api/purchase", require("./routes/purchaseRoutes"));
-app.use("/api/payment", require("./routes/paymentRoutes"));
 
 app.use(errorHandler);
 
