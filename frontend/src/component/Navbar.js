@@ -85,6 +85,11 @@ const Navbar = () => {
                       {state.user.name}
                     </Link>
                   </li>
+                  <li>
+                    <Link className="justify-between" to="/orders">
+                      My Orders
+                    </Link>
+                  </li>
                   {state.user.role === "admin" && (
                     <>
                       <hr />

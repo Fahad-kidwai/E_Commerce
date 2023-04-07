@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default async function displayRazorpay(dataObj) {
   const { price, shippingInfo, orderItems, token } = dataObj.data;
   console.log(price, shippingInfo, orderItems, token);
+
   const amnt = parseInt(price);
   console.log(typeof amnt);
 
@@ -36,10 +37,7 @@ export default async function displayRazorpay(dataObj) {
           // totalPrice
         };
 
-        const order = createOrder(orderData, token);
-        if (order) {
-          console.log("order created", order);
-        }
+        createOrder(orderData, token);
       }
     },
     prefill: {
@@ -55,6 +53,7 @@ export default async function displayRazorpay(dataObj) {
 }
 
 const createOrder = async (data, token) => {
+  const navigate = useNavigate;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -62,7 +61,6 @@ const createOrder = async (data, token) => {
   };
   console.log("config", config);
   const order = await axios.post("/api/order/", data, config);
-  console.log("Pjs order", order);
-
-  return order;
+  // navigate("/orders");
+  window.location.href = "/orders";
 };

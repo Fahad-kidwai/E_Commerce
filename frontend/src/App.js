@@ -15,6 +15,7 @@ import Cart from "./component/Cart";
 import About from "./component/About";
 import Purchases from "./component/Purchases";
 import Suppliers from "./component/Suppliers";
+import MyOrders from "./component/MyOrders";
 
 function App() {
   const loadScript = (src) => {
@@ -54,6 +55,7 @@ function App() {
             <Route path="/admin/" element={<Inventory />} />
             <Route path="/cart/" element={<Cart />} />
             <Route path="/about" element={<About />} />
+            <Route path="/orders" element={<MyOrders />} />
 
             <Route path="/admin/users" element={<UserMangement />} />
             <Route path="/admin/suppliers" element={<Suppliers />} />

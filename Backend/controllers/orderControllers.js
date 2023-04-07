@@ -34,6 +34,9 @@ exports.newOrder = asyncHandler(async (req, res) => {
 
 // get Sinngle Order
 exports.getSingleOrder = asyncHandler(async (req, res) => {
+  // console.log(req);
+  console.log("user");
+
   const order = await Order.findById(req.params.id).populate(
     "user",
     "name email"
@@ -52,8 +55,9 @@ exports.getSingleOrder = asyncHandler(async (req, res) => {
 
 // get logged in user  Orders
 exports.myOrders = asyncHandler(async (req, res) => {
+  console.log("user");
   const orders = await Order.find({ user: req.user._id });
-
+  // console.log(orders);
   res.status(200).json({
     success: true,
     orders,
