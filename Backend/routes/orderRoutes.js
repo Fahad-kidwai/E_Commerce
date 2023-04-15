@@ -15,11 +15,10 @@ const { protect, authorizedRoles } = require("../middleware/authMiddleware");
 
 router.route("/").post(protect, newOrder);
 
-// router.route("/:id").get(protect, getSingleOrder);
-
 router.route("/me").get(protect, myOrders);
 
 router.route("/admin").get(protect, authorizedRoles("admin"), getAllOrders);
+router.route("/:id").get(protect, getSingleOrder);
 
 router
   .route("/admin/:id")

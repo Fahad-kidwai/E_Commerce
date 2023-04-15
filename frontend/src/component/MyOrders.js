@@ -16,7 +16,7 @@ const MyOrders = () => {
           },
         };
         // const response = await axios.get(API_URL + sl_Id, config);
-        const myOrders = await axios.get("api/order/me/", config);
+        const myOrders = await axios.get("/api/order/me/", config);
         console.log("myOrders", myOrders.data.orders);
         setOrders(myOrders.data.orders);
       } catch (error) {

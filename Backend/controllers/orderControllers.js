@@ -66,6 +66,7 @@ exports.myOrders = asyncHandler(async (req, res) => {
 
 // get all Orders -- Admin
 exports.getAllOrders = asyncHandler(async (req, res) => {
+  console.log("admin");
   const orders = await Order.find();
 
   let totalAmount = 0;

@@ -137,7 +137,7 @@ const Inventory = () => {
     <Fragment>
       <AdminSlider />
 
-      <div class="p-2 sm:ml-64 ">
+      <div className="p-2 sm:ml-64 ">
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">Inventory Panel</h1>
