@@ -38,4 +38,14 @@ const newPurchase = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = newPurchase;
+const allPurchase = asyncHandler(async (req, res) => {
+  const purchases = await Purchase.find();
+  if (purchases) {
+    res.status(201).json(purchases);
+  }
+});
+
+module.exports = {
+  newPurchase,
+  allPurchase,
+};

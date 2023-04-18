@@ -14,10 +14,6 @@ const Table = ({ item, setEditFormData }) => {
   let totalStock = q + " " + item.q_Param;
   const openEditModal = async (element) => {
     document.getElementById("my-modal-2").checked = true;
-    // document.getElementById("name").value = "mushroom";
-    // document.getElementById("name").value = element.name;
-    // document.getElementById("name").value = element.name;
-    // document.getElementById("name").value = element.name;
 
     setEditFormData(element);
     console.log("e from edit button", element);

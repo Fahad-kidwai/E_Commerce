@@ -34,9 +34,11 @@ const Home = () => {
   return (
     <>
       <Swiper />
-      <div className="flex flex-row p-4 gap-x-8 flex-wrap justify-around ">
-        {products &&
-          products?.map((item) => <Card item={item} key={item._id} />)}
+      <div className=" bg-[#e7eaea]">
+        <div className="flex flex-row p-4 gap-x-8 flex-wrap justify-around ">
+          {products &&
+            products?.map((item) => <Card item={item} key={item._id} />)}
+        </div>
       </div>
     </>
   );

@@ -17,3 +17,19 @@ export const newPurchase = async (data, token) => {
     throw error;
   }
 };
+
+export const getAllPurchases = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    // console.log(data.sl_ID);
+    const response = await axios.get(API_URL, config);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

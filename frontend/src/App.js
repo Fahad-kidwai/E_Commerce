@@ -17,6 +17,7 @@ import Purchases from "./component/Purchases";
 import Suppliers from "./component/Suppliers";
 import MyOrders from "./component/MyOrders";
 import { Reports } from "./component/Reports";
+import Delievery from "./component/Delievery";
 
 function App() {
   const loadScript = (src) => {
@@ -62,6 +63,7 @@ function App() {
             <Route path="/admin/suppliers" element={<Suppliers />} />
             <Route path="/admin/purchases" element={<Purchases />} />
             <Route path="/admin/report" element={<Reports />} />
+            <Route path="/admin/delievery" element={<Delievery />} />
             {/* <Route
                   element={
                     window.location.pathname === "/payment" ? null : "NotFound"

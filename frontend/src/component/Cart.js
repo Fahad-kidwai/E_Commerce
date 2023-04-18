@@ -83,7 +83,7 @@ const Cart = () => {
   };
   return (
     <Fragment>
-      <div className="p-2 sm:ml-8 ">
+      <div className="p-2 sm:ml-12 sm:mr-12  bg-slate-300 rounded-3xl">
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">My Cart</h1>
@@ -99,23 +99,20 @@ const Cart = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className=" text-[#0e1242]">
                 {myProducts &&
                   myProducts.map(
                     (item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <Link
-                            to="/"
-                            className=" text-green-600 hover:underline"
-                          >
+                      <tr key={index} className=" bg-slate-300">
+                        <td className="bg-[#e2eced]">
+                          <Link to="/" className=" hover:underline">
                             {item.sku}
                           </Link>
                         </td>
-                        <td>{item.quantity}</td>
-                        <td>{item.price}</td>
-                        <td>{item.total}</td>
-                        <th>
+                        <td className="bg-[#e2eced]">{item.quantity}</td>
+                        <td className="bg-[#e2eced]">{item.price}</td>
+                        <td className="bg-[#e2eced]">{item.total}</td>
+                        <th className="bg-[#e2eced]">
                           {" "}
                           <button
                             className="btn btn-ghost btn-xs ml-[0.5rem]"
@@ -161,16 +158,17 @@ const Cart = () => {
           {myProducts && myProducts.length >= 1 && (
             <div className=" float-right w-60 mt-6 border-t-2 border-green-600">
               <div className="flex justify-between">
-                <p>Sub Total</p>{" "}
+                <p>Sub Total :</p>{" "}
                 <input
                   id="total"
+                  className=" bg-slate-300 w-16"
                   value={myProducts.reduce((acc, item) => acc + item.total, 0)}
                 />
               </div>
               <div></div>
               <div>
                 <button
-                  className="btn btn-ghost btn-xs text-white mt-2 transition-colors duration-200 transform hover:bg-green-900 rounded-md bg-green-600 focus:outline-none focus:bg-yellow-400"
+                  className="btn btn-ghost btn-xs text-white p-2  transition-colors duration-200 transform hover:bg-green-900 rounded-md bg-green-600 focus:outline-none focus:bg-yellow-400"
                   data-te-toggle="tooltip"
                   data-te-placement="bottom"
                   data-te-ripple-init

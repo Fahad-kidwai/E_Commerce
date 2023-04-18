@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 function ImageSlider() {
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className=" p-1 bg-[#e7eaea]">
       {/* <p className="exploreHeading text-[2rem] mb-4">Recommended</p> */}
 
       <Swiper
@@ -22,15 +22,17 @@ function ImageSlider() {
         autoplay={true}
       >
         <SwiperSlide key={1}>
-          <Link to={`/pizza/${1}`}>
+          <Link>
             <div
               style={{
                 background: `url("https://images.unsplash.com/photo-1558818498-28c1e002b655?ixlib=rb-4.0.3&dl=rodion-kutsaiev-EPwuZxdketc-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb") center no-repeat`,
               }}
               className="swiperSlideDiv h-[50vh]"
             >
-              {/* <p className="swiperSlideText">NAME</p>
-              <p className="swiperSlidePrice">$2.5</p> */}
+              {/* <p className=" text-opacity-100 text-black text-5xl">
+                Get Your Veggies at Your Premises
+              </p>
+              <p className=" opacity-100">$2.5</p> */}
             </div>
           </Link>
         </SwiperSlide>
@@ -42,8 +44,8 @@ function ImageSlider() {
             }}
             className="swiperSlideDiv h-[50vh]"
           >
-            {/* <p className="swiperSlideText">NAME</p>
-            <p className="swiperSlidePrice">$2.5</p> */}
+            {/* <p className=" bg-blend-overlay">NAME</p>
+            <p className="bg-blend-overlay">$2.5</p> */}
           </div>
         </SwiperSlide>
         <SwiperSlide key={3}>
