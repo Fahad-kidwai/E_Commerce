@@ -11,7 +11,7 @@ const Table = ({ item, setEditFormData }) => {
   if (item.Quantity) {
     q = item.Quantity;
   }
-  let totalStock = q + " " + item.q_Param;
+  let totalStock = q + " " + item.qParam;
   const openEditModal = async (element) => {
     document.getElementById("my-modal-2").checked = true;
 
@@ -31,9 +31,7 @@ const Table = ({ item, setEditFormData }) => {
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
               <img
-                src={`data:${item.image.contentType};base64, ${Buffer.from(
-                  item.image.data
-                ).toString("base64")}`}
+                src={item.image && item.image.secure_url}
                 alt="Avatar Tailwind CSS Component"
               />
             </div>

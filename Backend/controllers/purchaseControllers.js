@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 
 const Purchase = require("../models/purchaseModel");
 const Product = require("../models/productModel");
-// const {updateProdct} = require('./productControllers')
 
 const newPurchase = asyncHandler(async (req, res) => {
   const { sl_ID, pName, pSku, quantity, costPrice, totalAmnt } = req.body;

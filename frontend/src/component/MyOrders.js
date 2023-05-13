@@ -41,21 +41,9 @@ const MyOrders = () => {
             <div className="card-body">
               <h2 className="card-title">{item.shippingInfo.address}</h2>
               <p>{item.itemsPrice}</p>
-              {/* <p>
-            Price -{item.price}/{item.q_Param}
-          </p> */}
-              {/* <div className="card-actions justify-around">
-            <button
-              className="btn btn-primary"
-              onClick={() => addToCart(item._id, 10)}
-            >
-              Add To Cart
-            </button>
-          </div> */}
             </div>
           </div>
         ))}
-      {/* </div> */}
     </Fragment>
   );
 };

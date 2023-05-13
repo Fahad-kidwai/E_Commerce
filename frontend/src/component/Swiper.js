@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 function ImageSlider() {
   return (
-    <div className=" p-1 bg-[#e7eaea]">
+    <div className=" p-1 bg-[#fbf8f8]">
       {/* <p className="exploreHeading text-[2rem] mb-4">Recommended</p> */}
 
       <Swiper

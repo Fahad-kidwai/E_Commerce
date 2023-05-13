@@ -12,12 +12,12 @@ const {
 const { protect, authorizedRoles } = require("../middleware/authMiddleware");
 
 // const {protect} = require('../middleware/authMiddleware')
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 router
   .route("/")
-  .get(protect, getProdct)
-  .post(protect, authorizedRoles("admin"), upload.single("image"), addProdct);
+  .get(getProdct)
+  .post(protect, authorizedRoles("admin"), addProdct);
 router
   .route("/:id")
   .delete(protect, authorizedRoles("admin"), deleteProdct)

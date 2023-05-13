@@ -23,6 +23,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-[#225520] fixed z-[1000]">
       <div className="navbar-start">
+        <div>
+          <img src="../images/logo.png" alt="" />
+        </div>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
@@ -55,20 +58,20 @@ const Navbar = () => {
       </div>
       <div className="navbar-center">
         <Link to="/" className="btn btn-ghost normal-case text-2xl text-white">
+          {/* FreshHarvest */}
           FreshHarvest
         </Link>
       </div>
       <div className="navbar-end">
-        <div className="flex justify-around w-[16rem]">
+        <div className="flex items-center justify-around w-[25rem]">
           <input
             type="text"
             placeholder="Search here"
-            className="input input-bordered w-full max-w-xs h-8 mt-2"
+            className="input input-bordered w-full max-w-xs h-8 mr-4"
           />
-          <Link to="/cart/" className="btn btn-ghost btn-circle">
+          <Link to="/cart/" className="btn btn-ghost">
             <FaShoppingCart fill="#ffffff" />
           </Link>
-
           {/* dropdown for authenticaation of user */}
           <div className="dropdown dropdown-end text-black">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -76,7 +79,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              className=" p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               {state.user && (
                 <>
@@ -122,11 +125,6 @@ const Navbar = () => {
               )}
             </ul>
           </div>
-          {/* <Link to="/login">
-            <button className="btn btn-ghost btn-circle">
-              <FaUserAlt fill="#ffffff" />
-            </button>
-          </Link> */}
         </div>
       </div>
     </div>

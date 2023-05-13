@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AdminSlider from "./AdminSlider";
 import Table from "./Table";
@@ -16,7 +22,7 @@ const Inventory = () => {
     name: "",
     sku: "",
     category: "",
-    qParam: "",
+    qParam: "Kg",
   });
 
   // Edit functions
@@ -28,6 +34,40 @@ const Inventory = () => {
     price: 0,
     // Quantity: 0,
   });
+  const [products, setProducts] = useState(null);
+  const [image, setImgFile] = useState(null);
+  const { state } = useContext(UserContext);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProdct(state.user.token);
+      console.log("data", data);
+      setProducts(data.products);
+
+      // productDispatch({ type: "GET_PRODUCTS", payload: data });
+    };
+    fetchProducts();
+  }, [state.user.token]);
+  const [filteredData, setFilteredData] = useState(products);
+  const [sortedColumn, setSortedColumn] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const handleFilter = (event) => {
+    const value = event.target.value.toLowerCase();
+    const filtered = products.filter((item) =>
+      item.name.toLowerCase().includes(value)
+    );
+    setProducts(filtered);
+    // console.log(filteredData)
+  };
+
+  const handleSort = (column) => {
+    if (sortedColumn === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortedColumn(column);
+      setSortOrder("asc");
+    }
+  };
 
   const handleEditChange = (e) => {
     setEditFormData((prevState) => ({
@@ -38,8 +78,6 @@ const Inventory = () => {
 
   // const { id, name, sku, price, Quantity } = editFormData;
 
-  const [image, setImgFile] = useState(null);
-  const { state } = useContext(UserContext);
   // const { productDispatch } = useContext(ProductContext);
   const navigate = useNavigate();
 
@@ -65,9 +103,9 @@ const Inventory = () => {
       formData.append("name", name);
       formData.append("sku", sku);
       formData.append("category", category);
-      formData.append("q_Param", qParam);
+      formData.append("qParam", qParam);
       formData.append("image", image);
-
+      console.log("Form Data", formData);
       const response = await addProduct(formData, state.user.token);
       console.log({ response });
       // productDispatch({ type: "CREATE_PRODUCT", payload: response });
@@ -84,21 +122,24 @@ const Inventory = () => {
     }
   };
 
-  const [products, setProducts] = useState(null);
+  const sortedData = useMemo(() => {
+    if (sortedColumn) {
+      const sorted = [...filteredData].sort((a, b) =>
+        sortOrder === "asc"
+          ? a[sortedColumn] > b[sortedColumn]
+            ? 1
+            : -1
+          : b[sortedColumn] > a[sortedColumn]
+          ? 1
+          : -1
+      );
+      return sorted;
+    }
+    return filteredData;
+  }, [filteredData, sortedColumn, sortOrder]);
 
   const ePrice = editFormData.price;
   const eQuantity = editFormData.Quantity;
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const data = await getProdct(state.user.token);
-      console.log("data", data);
-      setProducts(data.products);
-
-      // productDispatch({ type: "GET_PRODUCTS", payload: data });
-    };
-    fetchProducts();
-  }, [state.user.token]);
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -141,6 +182,12 @@ const Inventory = () => {
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">Inventory Panel</h1>
+            <input
+              className="input border-blue-900 mt-20 p-2 h-8 "
+              placeholder="Search"
+              type="text"
+              onChange={handleFilter}
+            />
           </div>
           <div className="overflow-x-auto w-full mt-[1rem]">
             <table className="table w-full">
@@ -185,7 +232,11 @@ const Inventory = () => {
           >
             ✕
           </label>
-          <form className="mt-6" onSubmit={handleSubmit}>
+          <form
+            className="mt-6"
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+          >
             <div className="mb-2">
               <label
                 for="name"
@@ -348,39 +399,6 @@ const Inventory = () => {
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
-
-            {/* <div className="mb-2">
-              <label
-                for="Quantity"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Quantity
-              </label>
-              <input
-                type="number"
-                name="Quantity"
-                id="Quantity"
-                onChange={handleEditChange}
-                className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
-            </div> */}
-
-            {/* <div className="mb-2 mt">
-              <label
-                for="image"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Image
-              </label>
-              <input
-                type="file"
-                name="image"
-                id="image"
-                onChange={onImageChange}
-                required
-                className="file-input file-input-bordered w-full max-w-xs sm:max-w-[30rem] my-3"
-              />
-            </div> */}
 
             <div className="mt-6">
               <button

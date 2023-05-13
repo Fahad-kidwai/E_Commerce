@@ -6,11 +6,11 @@ import { Country, State, City } from "country-state-city";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/user/UserContext";
 import { useContext } from "react";
-// import { GooglePayButton } from "@google-pay/button-react";
 import displayRazorpay from "../utils/Paymentgateway";
 
 const Cart = () => {
   const myProducts = JSON.parse(localStorage.getItem("cartItems"));
+  console.log(myProducts);
   const [pState, setState] = useState(myProducts);
 
   const { state } = useContext(UserContext);
@@ -88,61 +88,75 @@ const Cart = () => {
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">My Cart</h1>
           </div>
+          {!myProducts && (
+            <div className="flex justify-items-center flex-col mt-5">
+              <div>
+                <h1 className=" text-red-600">It seems your cart is empty</h1>
+              </div>
+              <Link to={"/"}>
+                <button className="btn btn-primary p-1 min-h-min min-w-min">
+                  Add Products
+                </button>
+              </Link>
+            </div>
+          )}
           <div className="overflow-x-auto w-full mt-[1rem]">
-            <table id="cartTable" className="table w-full">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Total</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className=" text-[#0e1242]">
-                {myProducts &&
-                  myProducts.map(
-                    (item, index) => (
-                      <tr key={index} className=" bg-slate-300">
-                        <td className="bg-[#e2eced]">
-                          <Link to="/" className=" hover:underline">
-                            {item.sku}
-                          </Link>
-                        </td>
-                        <td className="bg-[#e2eced]">{item.quantity}</td>
-                        <td className="bg-[#e2eced]">{item.price}</td>
-                        <td className="bg-[#e2eced]">{item.total}</td>
-                        <th className="bg-[#e2eced]">
-                          {" "}
-                          <button
-                            className="btn btn-ghost btn-xs ml-[0.5rem]"
-                            data-te-toggle="tooltip"
-                            data-te-placement="bottom"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            title="Delete"
-                            onClick={() => deleteItem(item.id)}
-                          >
-                            <FaTrash
-                              className="h-[18px] w-[18px]"
-                              fill="#800812"
-                            />
-                          </button>
-                        </th>
-                      </tr>
-                    )
+            {myProducts && (
+              <table id="cartTable" className="table w-full">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody className=" text-[#0e1242]">
+                  {myProducts &&
+                    myProducts.map(
+                      (item, index) => (
+                        <tr key={index} className=" bg-slate-300">
+                          <td className="bg-[#e2eced]">
+                            <Link to="/" className=" hover:underline">
+                              {item.sku}
+                            </Link>
+                          </td>
+                          <td className="bg-[#e2eced]">{item.quantity}</td>
+                          <td className="bg-[#e2eced]">{item.price}</td>
+                          <td className="bg-[#e2eced]">{item.total}</td>
+                          <th className="bg-[#e2eced]">
+                            {" "}
+                            <button
+                              className="btn btn-ghost btn-xs ml-[0.5rem]"
+                              data-te-toggle="tooltip"
+                              data-te-placement="bottom"
+                              data-te-ripple-init
+                              data-te-ripple-color="light"
+                              title="Delete"
+                              onClick={() => deleteItem(item.id)}
+                            >
+                              <FaTrash
+                                className="h-[18px] w-[18px]"
+                                fill="#800812"
+                              />
+                            </button>
+                          </th>
+                        </tr>
+                      )
 
-                    // (
-                    //   <Table
-                    //     item={item}
-                    //     key={item._id}
-                    //     // setEditFormData={setEditFormData}
-                    //   />
-                    // )
-                  )}
-              </tbody>
-            </table>
-            {myProducts && myProducts.length === 0 && (
+                      // (
+                      //   <Table
+                      //     item={item}
+                      //     key={item._id}
+                      //     // setEditFormData={setEditFormData}
+                      //   />
+                      // )
+                    )}
+                </tbody>
+              </table>
+            )}
+            {/* {myProducts && myProducts.length === 0 && (
               <div className="flex justify-items-center flex-col mt-5">
                 <div>
                   <h1 className=" text-red-600">It seems your cart is empty</h1>
@@ -153,7 +167,7 @@ const Cart = () => {
                   </button>
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
           {myProducts && myProducts.length >= 1 && (
             <div className=" float-right w-60 mt-6 border-t-2 border-green-600">

@@ -16,6 +16,5 @@ exports.processPayment = asyncHandler(async (req, res) => {
 });
 
 exports.sendStripeApiKey = asyncHandler(async (req, res) => {
-  // console.log("Stripe running");
   res.status(200).json({ stripeApiKey: process.env.STRIPE_API_KEY });
 });

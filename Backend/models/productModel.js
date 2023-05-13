@@ -20,12 +20,12 @@ const productSchema = mongoose.Schema(
     //   default: 0,
     // },
     image: {
-      data: Buffer,
-      contentType: String,
+      public_id: String,
+      secure_url: String,
     },
-    q_Param: {
+    qParam: {
       type: String,
-      required: [true, "Please add a Quantity Parameters"],
+      // required: [true, "Please add a Quantity Parameters"],
     },
     price: {
       type: Number,

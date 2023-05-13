@@ -12,10 +12,16 @@ export const Reports = () => {
   const [purchases, setPurchases] = useState([]);
   const [csvData, setCsvData] = useState([]);
   const [filterData, setFilterData] = useState(null);
+  const [daysAgo, setDaysAgo] = useState(0);
   const { state } = useContext(UserContext);
   const token = state.user.token;
   let currentDate = new Date();
   // const csvData = [];
+
+  const handleSelect = (e) => {
+    setDaysAgo(e.target.value);
+    console.log(daysAgo);
+  };
 
   useEffect(() => {
     const fetchMyOrders = async () => {
@@ -53,7 +59,7 @@ export const Reports = () => {
   const filteredPurchases = purchases?.filter((collection) => {
     const creationDate = new Date(collection.createdAt).getDate();
     const currentDate = new Date();
-    const daysAgo = 0; // Number of days to look back
+    // const daysAgo = 0; // Number of days to look back
     const dateThreshold = currentDate.getDate() - daysAgo;
     return creationDate >= dateThreshold;
   });
@@ -122,6 +128,15 @@ export const Reports = () => {
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-2xl mt-20">Report</h1>
+            <select
+              className=" border-blue-900 mt-20 p-2 h-10 "
+              onChange={handleSelect}
+            >
+              <option>Period</option>
+              <option value="7">7 days</option>
+              <option value="14">14 days</option>
+              <option value="0">all</option>
+            </select>
           </div>
           <div className="overflow-x-auto w-full mt-[1rem]">
             <table id="report" className="table w-full">
@@ -152,19 +167,11 @@ export const Reports = () => {
                           0
                         )}
                       </td>
-                      {/* {collections.map((collection) => (
-                    <div key={collection.id}>
-                      <h3>{collection.orderItems.length}</h3>
-                      <p>{collection.itemsPrice}</p>
-                      <p>Created on: {collection.createdAt}</p>
-                    </div>
-                  ))} */}
                     </tr>
                   )
                 )}
               </tbody>
             </table>
-            {/* <CSVDownload data={csvData} target="_blank" /> */}
             <CSVLink data={csvData} headers={head} filename="Report.csv">
               <button className="btn " onClick={tableData}>
                 Export

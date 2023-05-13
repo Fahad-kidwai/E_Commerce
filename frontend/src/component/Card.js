@@ -1,19 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Buffer } from "buffer";
-// import { addItemsToCart } from "../context/cart/CartActions";
 import axios from "axios";
 import { UserContext } from "../context/user/UserContext";
 
 const Card = ({ item }) => {
   const { state } = useContext(UserContext);
   const [qty, setQty] = useState(1);
-  // console.log("Function loaded");
-  // console.log(item);
   const addToCart = async (id) => {
     console.log("onClick", id);
-    // const response = await addItemsToCart(e, 1);
-    // console.log("Carting", response);
-
     const config = {
       headers: {
         Authorization: `Bearer ${state.user.token}`,
@@ -56,23 +50,18 @@ const Card = ({ item }) => {
   return (
     <div className="card card-compact w-72 h-80 bg-base-100 shadow-xl mt-8 hover:scale-110 ">
       <figure className=" max-h-60">
-        <img
-          src={`data:${item.image.contentType};base64, ${Buffer.from(
-            item.image.data
-          ).toString("base64")}`}
-          alt="Images"
-        />
+        <img src={item.image && item.image.secure_url} alt="Images" />
       </figure>
       <div className="card-body">
         <h2 className="card-title p-0 leading-3">{item.name}</h2>
         <p>{item.sku}</p>
         <p className=" leading-3">
-          Price -{item.price}/{item.q_Param}
+          Price -{item.price}/{item.qParam}
         </p>
         <div className="card-actions justify-end">
           <div className="btn-group">
             <button
-              className="btn w-2 h-10 bg-black text-white"
+              className="btn w-2 h-10 bg-black text-white   focus:bg-slate-200"
               onClick={() => {
                 handleIncDec(item._id, "dec");
               }}
@@ -83,7 +72,7 @@ const Card = ({ item }) => {
               type="text"
               // placeholder="Qty"
               min={1}
-              value={qty + item.q_Param}
+              value={qty + item.qParam}
               className=" p-2 max-w-[3rem] font-normal"
               onChange={(e) => {
                 console.log(e);
@@ -91,15 +80,14 @@ const Card = ({ item }) => {
               }}
             />
             <button
-              className="btn w-2 h-10 bg-black text-white"
+              className="btn w-2 h-10 bg-black text-white   focus:bg-slate-200"
               onClick={() => handleIncDec(item._id, "inc")}
             >
               +
             </button>
           </div>
-          {/* <div className="card-actions "> */}
           <button
-            className="btn btn-primary"
+            className="btn btn-primary bg-black hover:bg-slate-500 focus:bg-slate-200 "
             onClick={() => addToCart(item._id)}
           >
             Add To Cart

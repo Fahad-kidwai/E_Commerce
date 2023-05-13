@@ -1,3 +1,4 @@
+const cloudinary = require("cloudinary").v2;
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/productModel");
 const ApiFeatures = require("../utils/apiFeatures");
@@ -40,10 +41,12 @@ const getProdctDetails = asyncHandler(async (req, res) => {
 
 // Create Product-- admin
 const addProdct = asyncHandler(async (req, res) => {
-  const { name, sku, category, q_Param } = req.body;
-  console.log(name, sku, category, q_Param);
-  if (!name || !sku || !q_Param) {
+  const { name, sku, category, qParam, image } = req.body;
+  console.log(req.body);
+  console.log(name, sku, category, qParam);
+  if (!name || !sku || !qParam) {
     res.status(400);
+
     throw new Error("Add all fields");
   }
   const prodctExist = await Product.findOne({ sku });
@@ -52,15 +55,20 @@ const addProdct = asyncHandler(async (req, res) => {
     throw new Error("Product already exist");
   }
   console.log("Adding product");
+  const fileRes = await cloudinary.uploader.upload(
+    req.files.image.tempFilePath,
+    { folder: "ProductImages" }
+  );
+
   const prodct = await Product.create({
     name,
     sku,
     category,
     image: {
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
+      public_id: fileRes.public_id,
+      secure_url: fileRes.secure_url,
     },
-    q_Param,
+    qParam,
   });
   if (prodct) {
     res.status(201).json({

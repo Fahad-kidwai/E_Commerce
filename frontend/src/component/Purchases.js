@@ -76,27 +76,11 @@ const Purchases = () => {
       const x = document.getElementById("supplier");
       var sl_ID = x.options[x.selectedIndex].value;
       console.log(sl_ID);
-      // formData.Quantity = parseInt(formData.Quantity) + parseInt(prevQuantity);
       const data = { sl_ID, pName, pSku, quantity, costPrice, totalAmnt };
       console.log(data);
-      // const newForm = new FormData();
-      // newForm.append("sl_ID", sl_ID);
-      // newForm.append("pName", formData.name);
-      // newForm.append("pSku", formData.sku);
-      // newForm.append("quantity", formData.Quantity);
-      // newForm.append("costPrice", formData.price);
-      // newForm.append("totalAmnt", totalAmnt);
-
       const response = await newPurchase(data, state.user.token);
-      // const response = await updateProdct(id, newForm, state.user.token);
-      // console.log("response", response);
-      // productDispatch({ type: "UPDATE_PRODUCT", payload: response });
-
-      // navigate("/");
       console.log(response);
       toast.success("Product updated succesfully");
-      //   document.getElementById("price").innerHTML = null;
-      //   document.getElementById("Quantity").innerHTML = null;
     } catch (error) {
       toast.error(error.response.data.message);
     }

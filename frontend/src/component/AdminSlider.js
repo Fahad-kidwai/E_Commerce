@@ -64,7 +64,7 @@ const AdminSlider = () => {
             >
               <FaElementor />
               <span className="flex-1 ml-3 whitespace-nowrap">
-                Delievery Management
+                Delivery Management
               </span>
             </Link>
           </li>

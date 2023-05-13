@@ -123,18 +123,6 @@ const Suppliers = () => {
                       </td>
                       <td>{item._id}</td>
                       <th>
-                        {/* <Link to="/edit-product/:productId">
-                          <button
-                            className="btn btn-ghost btn-xs"
-                            data-te-toggle="tooltip"
-                            data-te-placement="bottom"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            title="Edit"
-                          >
-                            <FaRegEdit className="h-[18px] w-[18px]" />
-                          </button>
-                        </Link> */}
                         <button
                           className="btn btn-ghost btn-xs ml-[0.5rem]"
                           data-te-toggle="tooltip"

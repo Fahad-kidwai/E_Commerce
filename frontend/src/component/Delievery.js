@@ -55,7 +55,7 @@ const Delievery = () => {
       <div className="p-2 sm:ml-64 ">
         <div className="mb-[10rem] p-1">
           <div className="flex justify-between items-center">
-            <h1 className="font-bold text-2xl mt-20">Delievery Management</h1>
+            <h1 className="font-bold text-2xl mt-20">Delivery Management</h1>
           </div>
           <div className="overflow-x-auto w-full mt-[1rem]">
             <table className="table w-full">

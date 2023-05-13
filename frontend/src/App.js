@@ -8,7 +8,6 @@ import Navbar from "./component/Navbar";
 import Register from "./component/Register";
 import UserMangement from "./component/UserMangement";
 import { UserProvider } from "./context/user/UserContext";
-// import { ProductProvider } from "./context/product/ProductContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./component/Cart";
@@ -45,9 +44,6 @@ function App() {
   return (
     <>
       <UserProvider>
-        {/* <ProductProvider> */}
-        {/* <Route exact path="/payment" element={<Payment2 />} /> */}
-
         <Router>
           <Navbar />
           <Routes>
@@ -64,20 +60,6 @@ function App() {
             <Route path="/admin/purchases" element={<Purchases />} />
             <Route path="/admin/report" element={<Reports />} />
             <Route path="/admin/delievery" element={<Delievery />} />
-            {/* <Route
-                  element={
-                    window.location.pathname === "/payment" ? null : "NotFound"
-                  }
-                /> */}
-            {/* <Route
-                exact
-                path="/payment"
-                element={
-                  <Elements stripe={null}>
-                    <Payment2 />
-                  </Elements>
-                }
-              /> */}
           </Routes>
         </Router>
 

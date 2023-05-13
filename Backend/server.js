@@ -6,14 +6,28 @@ const connectDB = require("./config/db");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const shortid = require("shortid");
 const Razorpay = require("razorpay");
+const cloudinary = require("cloudinary").v2;
+const fileUpload = require("express-fileupload");
 // import axios from "axios";
 
 const port = process.env.PORT || 5000;
+
+cloudinary.config({
+  cloud_name: "dydwvfozy",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 connectDB();
 
 const app = express();
 
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/temp/",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());

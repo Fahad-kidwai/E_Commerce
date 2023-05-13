@@ -22,13 +22,13 @@ export const addProduct = async (productData, token) => {
 // Get all products
 export const getProdct = async (token) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // };
 
-    const response = await axios.get(API_URL, config);
+    const response = await axios.get(API_URL);
 
     return response.data;
   } catch (error) {
@@ -51,23 +51,6 @@ export const getProdctDetails = async (productId, token) => {
     throw error;
   }
 };
-
-// Get user product
-// export const getProduct = async (productId, token) => {
-//   try {
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
-
-//     const response = await axios.get(API_URL + productId, config);
-
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 // Update product
 export const updateProdct = async (productId, productData, token) => {

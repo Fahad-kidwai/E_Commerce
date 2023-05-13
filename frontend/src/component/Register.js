@@ -7,17 +7,6 @@ import { UserContext } from "../context/user/UserContext";
 import { register } from "../context/user/UserActions";
 import { toast } from "react-toastify";
 
-// function generateOTP() {
-//   // Declare a digits variable
-//   // which stores all digits
-//   var digits = "0123456789";
-//   let OTP = "";
-//   for (let i = 0; i < 4; i++) {
-//     OTP += digits[Math.floor(Math.random() * 10)];
-//   }
-//   return OTP;
-// }
-
 export default function Register() {
   const [formData, setFormData] = useState({
     name: "",
