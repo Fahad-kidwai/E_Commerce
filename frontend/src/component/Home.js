@@ -5,19 +5,13 @@ import Swiper from "./Swiper";
 import { getProdct } from "../context/product/ProductActions";
 import { UserContext } from "../context/user/UserContext";
 
-const Home = () => {
+const Home = ({ searchQuery }) => {
   const [products, setProducts] = useState(null);
   const { state } = useContext(UserContext);
 
-  const [filteredData, setFilteredData] = useState(products);
-
-  const handleFilter = (event) => {
-    const value = event.target.value.toLowerCase();
-    const filtered = products.filter((item) =>
-      item.name.toLowerCase().includes(value)
-    );
-    setFilteredData(filtered);
-  };
+  const filteredProducts = products?.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,8 +28,10 @@ const Home = () => {
       <Swiper />
       <div className=" bg-[#fbf8f8]">
         <div className="flex flex-row p-4 gap-x-8 flex-wrap justify-around ">
-          {products &&
-            products?.map((item) => <Card item={item} key={item._id} />)}
+          {filteredProducts &&
+            filteredProducts?.map((item) => (
+              <Card item={item} key={item._id} />
+            ))}
         </div>
       </div>
     </>

@@ -37,6 +37,12 @@ function App() {
     });
   };
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchQueryChange = (query) => {
+    setSearchQuery(query);
+  };
+
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   });
@@ -45,9 +51,9 @@ function App() {
     <>
       <UserProvider>
         <Router>
-          <Navbar />
+          <Navbar onSearchQueryChange={handleSearchQueryChange} />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home searchQuery={searchQuery} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin/" element={<Inventory />} />

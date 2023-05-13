@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 
 import { useContext } from "react";
@@ -7,11 +7,23 @@ import { UserContext } from "../context/user/UserContext";
 import { logout } from "../context/user/UserActions";
 import { toast } from "react-toastify";
 
-const Navbar = () => {
+const Navbar = ({ onSearchQueryChange }) => {
   const { dispatch, state } = useContext(UserContext);
   console.log(state);
 
   const navigate = useNavigate();
+
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+    onSearchQueryChange(searchInput);
+  };
+
+  // const handleSearchButtonClick = () => {
+  //   onSearchQueryChange(searchInput);
+  // };
+
   const handleLogout = () => {
     logout();
     localStorage.removeItem("cartItems");
@@ -23,8 +35,11 @@ const Navbar = () => {
   return (
     <div className="navbar bg-[#225520] fixed z-[1000]">
       <div className="navbar-start">
-        <div>
-          <img src="../images/logo.png" alt="" />
+        <div className="mask mask-circle w-10 h-10">
+          <img
+            src="https://res.cloudinary.com/dydwvfozy/image/upload/v1684012094/logo_fmqskm.png"
+            alt=""
+          />
         </div>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -66,7 +81,9 @@ const Navbar = () => {
         <div className="flex items-center justify-around w-[25rem]">
           <input
             type="text"
-            placeholder="Search here"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            placeholder="Share what you want"
             className="input input-bordered w-full max-w-xs h-8 mr-4"
           />
           <Link to="/cart/" className="btn btn-ghost">
