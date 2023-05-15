@@ -7,6 +7,11 @@ import { UserContext } from "../context/user/UserContext";
 import { toast } from "react-toastify";
 
 const Table = ({ item, setEditFormData }) => {
+  const { state } = useContext(UserContext);
+
+  if (!item) {
+    return;
+  }
   let q = 0;
   if (item.Quantity) {
     q = item.Quantity;
@@ -18,7 +23,6 @@ const Table = ({ item, setEditFormData }) => {
     setEditFormData(element);
     console.log("e from edit button", element);
   };
-  const { state } = useContext(UserContext);
   const deleteItem = async (id) => {
     const response = await deleteProdct(id, state.user.token);
     toast.success(response);

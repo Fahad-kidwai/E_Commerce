@@ -37,7 +37,7 @@ const Navbar = ({ onSearchQueryChange }) => {
       <div className="navbar-start">
         <div className="mask mask-circle w-10 h-10">
           <img
-            src="https://res.cloudinary.com/dydwvfozy/image/upload/v1684012094/logo_fmqskm.png"
+            src="https://res.cloudinary.com/dydwvfozy/image/upload/v1684093436/logo1_z6jtys.png"
             alt=""
           />
         </div>

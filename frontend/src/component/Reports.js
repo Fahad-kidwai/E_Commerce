@@ -41,7 +41,7 @@ export const Reports = () => {
     const fetchPurchases = async () => {
       const purchases = await getAllPurchases(token);
       setPurchases(purchases);
-      // console.log("purchases", purchases);
+      console.log("purchases", purchases);
     };
 
     fetchMyOrders();
@@ -51,7 +51,7 @@ export const Reports = () => {
   const filteredCollections = orders?.filter((collection) => {
     const creationDate = new Date(collection.createdAt).getDate();
     const currentDate = new Date();
-    const daysAgo = 20; // Number of days to look back
+    // const daysAgo = 20; // Number of days to look back
     const dateThreshold = currentDate.getDate() - daysAgo;
     return creationDate >= dateThreshold;
   });

@@ -5,7 +5,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 //get All products
 const getProdct = asyncHandler(async (req, res) => {
-  const resultPerPage = 20;
+  const resultPerPage = 100;
   const productCount = await Product.countDocuments();
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
@@ -70,9 +70,15 @@ const addProdct = asyncHandler(async (req, res) => {
     },
     qParam,
   });
+  console.log(prodct);
   if (prodct) {
     res.status(201).json({
       success: true,
+      prodct,
+    });
+  } else {
+    res.status(400).json({
+      success: false,
       prodct,
     });
   }

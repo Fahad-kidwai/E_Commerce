@@ -204,8 +204,8 @@ const Inventory = () => {
                 {products &&
                   products.map((item) => (
                     <Table
-                      item={item}
-                      key={item._id}
+                      item={item && item}
+                      key={item && item._id}
                       setEditFormData={setEditFormData}
                     />
                   ))}
@@ -239,7 +239,7 @@ const Inventory = () => {
           >
             <div className="mb-2">
               <label
-                for="name"
+                htmlFor="name"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Product Name
@@ -255,7 +255,7 @@ const Inventory = () => {
             </div>
             <div className="mb-2">
               <label
-                for="sku"
+                htmlFor="sku"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Sku
@@ -271,7 +271,7 @@ const Inventory = () => {
             </div>
             <div className="mb-2">
               <label
-                for="category"
+                htmlFor="category"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Category
@@ -284,15 +284,15 @@ const Inventory = () => {
                 required
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
               >
-                <option>LeafyGreen</option>
-                <option>Root</option>
-                <option>Cruciferous</option>
+                <option>Leafy</option>
+                <option>Roots</option>
+                <option>Fresh</option>
               </select>
             </div>
 
             <div className="mb-2">
               <label
-                for="qParam"
+                htmlFor="qParam"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Quantity Parameter
@@ -312,7 +312,7 @@ const Inventory = () => {
 
             <div className="mb-2 mt">
               <label
-                for="image"
+                htmlFor="image"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Image
@@ -352,7 +352,7 @@ const Inventory = () => {
           <form className="mt-6" onSubmit={handleEditSubmit}>
             <div className="mb-2">
               <label
-                for="name"
+                htmlFor="name"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Product Name
@@ -369,7 +369,7 @@ const Inventory = () => {
             </div>
             <div className="mb-2">
               <label
-                for="sku"
+                htmlFor="sku"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Sku
@@ -386,7 +386,7 @@ const Inventory = () => {
             </div>
             <div className="mb-2">
               <label
-                for="price"
+                htmlFor="price"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Selling Price

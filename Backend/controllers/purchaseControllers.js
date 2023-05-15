@@ -5,6 +5,9 @@ const Product = require("../models/productModel");
 
 const newPurchase = asyncHandler(async (req, res) => {
   const { sl_ID, pName, pSku, quantity, costPrice, totalAmnt } = req.body;
+  console.log("type", typeof quantity);
+  console.log("quuan", quantity);
+  console.log("type", costPrice);
   const purchase = await Purchase.create({
     sl_ID,
     pName,
@@ -16,8 +19,12 @@ const newPurchase = asyncHandler(async (req, res) => {
   if (purchase) {
     const product = await Product.findOne({ sku: pSku });
     console.log(product.sku);
-    console.log(product.Quantity);
-    var qty = Number(product.Quantity) + Number(quantity);
+    // console.log(product.Quantity);
+    if (product.Quantity) {
+      var qty = Number(product.Quantity) + Number(quantity);
+    } else {
+      var qty = Number(quantity);
+    }
     console.log(qty);
     const updtProdct = await Product.findByIdAndUpdate(
       product._id,
